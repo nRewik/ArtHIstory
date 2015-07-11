@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainItemView" customModule="ArtHistory" customModuleProvider="target">
+            <connections>
+                <outlet property="button" destination="zbs-a1-Whk" id="1td-1t-bHj"/>
+                <outlet property="label" destination="Vec-KT-Un8" id="3cx-cY-DIz"/>
+                <outlet property="topView" destination="lDs-wC-Ivs" id="zzt-WV-hOk"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="213" height="230"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lDs-wC-Ivs" userLabel="topView">
+                    <rect key="frame" x="0.0" y="0.0" width="213" height="175"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbs-a1-Whk" userLabel="button">
+                            <rect key="frame" x="19" y="0.0" width="175" height="175"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="zbs-a1-Whk" secondAttribute="height" multiplier="1:1" id="pZ2-TG-jG4"/>
+                            </constraints>
+                            <state key="normal" image="4.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="buttonPressed" destination="-1" eventType="touchUpInside" id="JcZ-fw-Xod"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="zbs-a1-Whk" secondAttribute="width" id="19t-r9-ZGv"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" secondItem="zbs-a1-Whk" secondAttribute="height" id="1jc-1q-TBL"/>
+                        <constraint firstAttribute="height" secondItem="zbs-a1-Whk" secondAttribute="height" priority="999" id="2G7-NX-peO"/>
+                        <constraint firstAttribute="width" secondItem="zbs-a1-Whk" secondAttribute="width" id="MRf-nd-pIv"/>
+                        <constraint firstAttribute="width" secondItem="zbs-a1-Whk" secondAttribute="width" id="NNV-GC-hrr"/>
+                        <constraint firstAttribute="height" secondItem="zbs-a1-Whk" secondAttribute="height" id="Owf-QJ-TZF"/>
+                        <constraint firstAttribute="height" secondItem="zbs-a1-Whk" secondAttribute="height" id="PAx-ls-roY"/>
+                        <constraint firstAttribute="centerX" secondItem="zbs-a1-Whk" secondAttribute="centerX" id="PUG-Wc-W8Q"/>
+                        <constraint firstAttribute="width" secondItem="zbs-a1-Whk" secondAttribute="width" constant="999" id="U3d-l5-pHF"/>
+                        <constraint firstAttribute="width" secondItem="zbs-a1-Whk" secondAttribute="height" multiplier="1:1" id="dst-OX-WK9"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" secondItem="zbs-a1-Whk" secondAttribute="height" id="i0p-Ej-Ouw"/>
+                        <constraint firstAttribute="centerY" secondItem="zbs-a1-Whk" secondAttribute="centerY" id="oJs-a2-TY6"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="19t-r9-ZGv"/>
+                            <exclude reference="1jc-1q-TBL"/>
+                            <exclude reference="2G7-NX-peO"/>
+                            <exclude reference="MRf-nd-pIv"/>
+                            <exclude reference="NNV-GC-hrr"/>
+                            <exclude reference="Owf-QJ-TZF"/>
+                            <exclude reference="U3d-l5-pHF"/>
+                            <exclude reference="dst-OX-WK9"/>
+                            <exclude reference="i0p-Ej-Ouw"/>
+                        </mask>
+                    </variation>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vec-KT-Un8" userLabel="label">
+                    <rect key="frame" x="15" y="175" width="183" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="KD2-Ti-qcd"/>
+                    </constraints>
+                    <string key="text">Early Christian
+And Bazantine</string>
+                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Vec-KT-Un8" firstAttribute="top" secondItem="lDs-wC-Ivs" secondAttribute="bottom" id="2Gp-F6-tcu"/>
+                <constraint firstAttribute="bottom" secondItem="Vec-KT-Un8" secondAttribute="bottom" constant="15" id="USi-xd-FMe"/>
+                <constraint firstAttribute="trailing" secondItem="lDs-wC-Ivs" secondAttribute="trailing" id="Zrk-lb-bqg"/>
+                <constraint firstItem="lDs-wC-Ivs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ay0-dw-3pX"/>
+                <constraint firstItem="lDs-wC-Ivs" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="fOj-D9-UDO"/>
+                <constraint firstItem="Vec-KT-Un8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="h3Q-dm-hdR"/>
+                <constraint firstAttribute="trailing" secondItem="Vec-KT-Un8" secondAttribute="trailing" constant="15" id="nW8-y6-nbF"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="166.5" y="220"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="4.png" width="640" height="480"/>
+    </resources>
+</document>

@@ -50,8 +50,10 @@ code_sign() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'BubbleTransition.framework'
   install_framework 'ChameleonFramework.framework'
+  install_framework 'FontAwesome_swift.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'BubbleTransition.framework'
   install_framework 'ChameleonFramework.framework'
+  install_framework 'FontAwesome_swift.framework'
 fi
