@@ -1,0 +1,15 @@
+PODS:
+  - BubbleTransition (0.2)
+  - ChameleonFramework/Default (1.2.1)
+  - ChameleonFramework/Swift (1.2.1):
+    - ChameleonFramework/Default
+
+DEPENDENCIES:
+  - BubbleTransition (~> 0.1)
+  - ChameleonFramework/Swift
+
+SPEC CHECKSUMS:
+  BubbleTransition: 6ee83cedb8b9eb2a9489e11b0e0c666f3916bb2c
+  ChameleonFramework: 3476f813ac1615aef0a9a958f05520dfca47e09d
+
+COCOAPODS: 0.37.2
