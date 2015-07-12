@@ -20,6 +20,9 @@
 		A0C9412B1B5132F300833D17 /* UIImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C9412A1B5132F300833D17 /* UIImageColors.swift */; };
 		A0C9412E1B51379800833D17 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = A0C9412D1B51379800833D17 /* FontAwesome.otf */; };
 		A0C941301B51777800833D17 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C9412F1B51777800833D17 /* UILabel.swift */; };
+		A0C941361B52796300833D17 /* ThumbnailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C941351B52796300833D17 /* ThumbnailCollectionViewCell.swift */; };
+		A0C941381B527C0000833D17 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C941371B527C0000833D17 /* Lesson.swift */; };
+		A0DF80571B5298A400FEAB2A /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DF80561B5298A400FEAB2A /* GalleryViewController.swift */; };
 		A0E03D6C1B50C747007A649F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E03D6B1B50C747007A649F /* AppDelegate.swift */; };
 		A0E03D711B50C747007A649F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0E03D6F1B50C747007A649F /* Main.storyboard */; };
 		A0E03D731B50C747007A649F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0E03D721B50C747007A649F /* Images.xcassets */; };
@@ -51,6 +54,9 @@
 		A0C9412A1B5132F300833D17 /* UIImageColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageColors.swift; sourceTree = "<group>"; };
 		A0C9412D1B51379800833D17 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
 		A0C9412F1B51777800833D17 /* UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		A0C941351B52796300833D17 /* ThumbnailCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailCollectionViewCell.swift; sourceTree = "<group>"; };
+		A0C941371B527C0000833D17 /* Lesson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
+		A0DF80561B5298A400FEAB2A /* GalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		A0E03D661B50C747007A649F /* ArtHistory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtHistory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E03D6A1B50C747007A649F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0E03D6B1B50C747007A649F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -165,10 +171,13 @@
 		A0E03D681B50C747007A649F /* ArtHistory */ = {
 			isa = PBXGroup;
 			children = (
+				A0C941371B527C0000833D17 /* Lesson.swift */,
 				A00C4D261B50F4470037B994 /* MainItemView.swift */,
 				A00C4D241B50F4320037B994 /* MainItemView.xib */,
+				A0C941351B52796300833D17 /* ThumbnailCollectionViewCell.swift */,
 				A00C4D221B50F3EF0037B994 /* MainViewController.swift */,
 				A0C941281B512D6900833D17 /* LessonViewController.swift */,
+				A0DF80561B5298A400FEAB2A /* GalleryViewController.swift */,
 				A0E03D6F1B50C747007A649F /* Main.storyboard */,
 				A0E03D721B50C747007A649F /* Images.xcassets */,
 				A0E03D741B50C747007A649F /* LaunchScreen.xib */,
@@ -362,9 +371,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				A00C4D231B50F3EF0037B994 /* MainViewController.swift in Sources */,
+				A0C941361B52796300833D17 /* ThumbnailCollectionViewCell.swift in Sources */,
 				A0E03D6C1B50C747007A649F /* AppDelegate.swift in Sources */,
+				A0C941381B527C0000833D17 /* Lesson.swift in Sources */,
 				A00C4D271B50F4470037B994 /* MainItemView.swift in Sources */,
 				A0C9412B1B5132F300833D17 /* UIImageColors.swift in Sources */,
+				A0DF80571B5298A400FEAB2A /* GalleryViewController.swift in Sources */,
 				A0C941301B51777800833D17 /* UILabel.swift in Sources */,
 				A0C941291B512D6900833D17 /* LessonViewController.swift in Sources */,
 			);
