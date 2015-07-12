@@ -16,6 +16,8 @@ class LessonViewController: UIViewController {
     var colorTone: UIImageColors!
     
     @IBOutlet weak var heightConstraint_topBlurView: NSLayoutConstraint!
+    
+    @IBOutlet weak var behindTopBlurView: UIView!
     @IBOutlet weak var topBlurView: UIVisualEffectView!
     @IBOutlet weak var topViewContent: UIView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -76,6 +78,9 @@ class LessonViewController: UIViewController {
         let playButtonColor = UIColor(contrastingBlackOrWhiteColorOn: colorTone.backgroundColor, isFlat: true)
         playGalleryButton.setTitleColor( playButtonColor, forState: .Normal)
         
+        let gradientColor = UIColor(gradientStyle: .TopToBottom, withFrame: behindTopBlurView.frame, andColors: [colorTone.backgroundColor,UIColor.flatWhiteColor()])
+        behindTopBlurView.backgroundColor = gradientColor
+        
         flatifyAndContrast()
     }
 
@@ -101,6 +106,7 @@ extension LessonViewController: UITextViewDelegate{
         if newHeight < maximumTopViewHeight{
             adjustTitleLabelFontSize()
         }
+ 
         view.layoutIfNeeded()
     }
     func adjustTitleLabelFontSize(){
