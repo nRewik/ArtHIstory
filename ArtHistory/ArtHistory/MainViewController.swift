@@ -18,6 +18,11 @@ class MainViewController: UIViewController {
     private var itemCenter: CGPoint!
     private var selectedItem: MainItemView!
     
+    private var itemRows: [ [MainItemView] ] = []
+    private var animator: UIDynamicAnimator!
+    
+    private var lastOffset: CGFloat = 0.0 //for calculate scrollView's delta offset
+    
     @IBOutlet weak private var topView: UIVisualEffectView!
     @IBOutlet weak private var scrollView: UIScrollView!
     
@@ -36,8 +41,11 @@ class MainViewController: UIViewController {
         let itemWidth = scrollViewWidth / CGFloat(numberOfItemsPerRow)
         let rowHeight: CGFloat = 135.0
         
+        // setup item in scrollView
+        itemRows = []
         var count = 0
         for row in 0..<numberOfRows{
+            var itemRow = [MainItemView]()
             for col in 0..<numberOfItemsPerRow{
                 let xOffset = itemWidth * CGFloat(col)
                 let yOffset = rowHeight * CGFloat(row)
@@ -52,10 +60,34 @@ class MainViewController: UIViewController {
                     self.performSegueWithIdentifier("showLesson", sender: nil)
                 }
                 count++
+                itemRow += [item]
                 scrollView.addSubview(item)
             }
+            itemRows += [ itemRow ]
         }
         scrollView.contentSize = CGSize(width: scrollViewWidth, height: rowHeight*5)
+        
+        // setup UIKit Dynamic
+        animator = UIDynamicAnimator(referenceView: scrollView)
+        for row in 0..<numberOfRows{
+            let currentRow = itemRows[row]
+            for col in 0..<numberOfItemsPerRow{
+                let item = currentRow[col]
+                let springBehavior = UIAttachmentBehavior(item: item, attachedToAnchor: item.center)
+                springBehavior.length = 0.0
+                springBehavior.damping = 0.8
+                springBehavior.frequency = 1.0
+                
+                //lock x coordinate
+                let xCoordinate = item.frame.origin.x
+                springBehavior.action = {
+                    item.frame.origin.x = xCoordinate
+                }
+                ////
+                animator.addBehavior(springBehavior)
+            }
+        }
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +97,8 @@ class MainViewController: UIViewController {
         let topInset = topView.frame.height + 20.0
         scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
         scrollView.setContentOffset( CGPoint(x: 0.0, y: -scrollView.contentInset.top), animated: false)
+        lastOffset = scrollView.contentOffset.y
+        scrollView.delegate = self
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -85,7 +119,32 @@ class MainViewController: UIViewController {
 
     }
 }
-
+// MARK: UIScrollViewDelegate
+extension MainViewController: UIScrollViewDelegate{
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        //update UIKit Dynamic
+        let delta = scrollView.contentOffset.y - lastOffset
+        for behavior in animator.behaviors{
+            let spring = behavior as! UIAttachmentBehavior
+            let yDistance = scrollView.contentOffset.y - spring.anchorPoint.y
+            let scrollResistance = yDistance / 1500.0
+            
+            let item = spring.items.first as! UIDynamicItem
+            var center = item.center
+            center.y += delta
+            if (delta < 0) {
+                center.y += max(delta, delta*scrollResistance);
+            }else {
+                center.y += min(delta, delta*scrollResistance);
+            }
+            item.center = center
+            animator.updateItemUsingCurrentState(item)
+        }
+        lastOffset = scrollView.contentOffset.y
+    }
+    
+}
 // MARK: UIViewControllerTransitioningDelegate
 extension MainViewController: UIViewControllerTransitioningDelegate{
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
