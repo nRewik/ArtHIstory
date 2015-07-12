@@ -9,11 +9,14 @@
 import UIKit
 import FontAwesome_swift
 import ChameleonFramework
+import BubbleTransition
 
 class LessonViewController: UIViewController {
 
     
     var colorTone: UIImageColors!
+    let transition = BubbleTransition()
+    
     
     @IBOutlet weak var heightConstraint_topBlurView: NSLayoutConstraint!
     
@@ -64,6 +67,14 @@ class LessonViewController: UIViewController {
         textView.delegate = self
         
         adjustTitleLabelFontSize()
+        
+        collectionView.contentInset = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: playGalleryView.frame.width+10)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        //setup flowLayout.itemSize
+        let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let length = collectionView.frame.height - 10.0
+        flowLayout.itemSize = CGSize(width: length, height: length)
     }
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return ChameleonStatusBar.statusBarStyleForColor(colorTone.backgroundColor)
@@ -83,9 +94,49 @@ class LessonViewController: UIViewController {
         
         flatifyAndContrast()
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showGallery"{
+            if let lessonVC = segue.destinationViewController as? GalleryViewController {
+                
+                lessonVC.transitioningDelegate = self
+                lessonVC.modalPresentationStyle = .Custom
+                
+//                lessonVC.colorTone = selectedItem.image?.getColors()
+            }
+        }
+    }
+    
+    @IBAction func unwindToLessonView(segue: UIStoryboardSegue){
+        
+    }
 
 }
 
+extension LessonViewController: UICollectionViewDataSource{
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ThumbnailCollectionViewCell", forIndexPath: indexPath) as! ThumbnailCollectionViewCell
+        cell.image = Lesson.getImageFromIndex(indexPath.row)
+        cell.action = {
+            let actualIndexPath = collectionView.indexPathForCell(cell)!
+            println(actualIndexPath)
+        }
+        return cell
+    }
+}
+extension LessonViewController: UICollectionViewDelegate{
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        println("select \(indexPath.row)")
+    }
+}
 extension LessonViewController: UITextViewDelegate{
     
     var minimumTopViewHeight: CGFloat{
@@ -94,8 +145,10 @@ extension LessonViewController: UITextViewDelegate{
     var maximumTopViewHeight: CGFloat{
         return 150.0
     }
-    
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView != textView{
+            return
+        }
         
         let currentYOffset = scrollView.contentOffset.y
         let topViewHeight = maximumTopViewHeight - currentYOffset
@@ -106,7 +159,7 @@ extension LessonViewController: UITextViewDelegate{
         if newHeight < maximumTopViewHeight{
             adjustTitleLabelFontSize()
         }
- 
+        
         view.layoutIfNeeded()
     }
     func adjustTitleLabelFontSize(){
@@ -115,4 +168,21 @@ extension LessonViewController: UITextViewDelegate{
         titleLabel.adjustFontSizeToFitRect(titleRect)
     }
     
+}
+
+// MARK: UIViewControllerTransitioningDelegate
+extension LessonViewController: UIViewControllerTransitioningDelegate{
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .Present
+        transition.startingPoint = view.convertPoint(playGalleryButton.center, fromView: playGalleryView)
+        transition.bubbleColor = colorTone.backgroundColor
+        return transition
+    }
+    
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.transitionMode = .Dismiss
+        transition.startingPoint = view.convertPoint(playGalleryButton.center, fromView: playGalleryView)
+        transition.bubbleColor = colorTone.backgroundColor
+        return transition
+    }
 }
