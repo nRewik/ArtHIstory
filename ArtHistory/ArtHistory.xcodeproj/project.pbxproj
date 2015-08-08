@@ -28,6 +28,8 @@
 		A0E03D731B50C747007A649F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0E03D721B50C747007A649F /* Images.xcassets */; };
 		A0E03D761B50C747007A649F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0E03D741B50C747007A649F /* LaunchScreen.xib */; };
 		A0E03D821B50C747007A649F /* ArtHistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E03D811B50C747007A649F /* ArtHistoryTests.swift */; };
+		A0EF02F21B75E07500C48350 /* LessonContentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EF02F11B75E07500C48350 /* LessonContentTableViewCell.swift */; };
+		A0EF02F41B76566600C48350 /* ThumbnailImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0EF02F31B76566600C48350 /* ThumbnailImageTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,8 @@
 		A0E03D7B1B50C747007A649F /* ArtHistoryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArtHistoryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E03D801B50C747007A649F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0E03D811B50C747007A649F /* ArtHistoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtHistoryTests.swift; sourceTree = "<group>"; };
+		A0EF02F11B75E07500C48350 /* LessonContentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LessonContentTableViewCell.swift; sourceTree = "<group>"; };
+		A0EF02F31B76566600C48350 /* ThumbnailImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailImageTableViewCell.swift; sourceTree = "<group>"; };
 		B1340652FA01F3288846C5AA /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C2C81D055EBB8BC4F70DBDBE /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -176,8 +180,10 @@
 				A00C4D241B50F4320037B994 /* MainItemView.xib */,
 				A0C941351B52796300833D17 /* ThumbnailCollectionViewCell.swift */,
 				A00C4D221B50F3EF0037B994 /* MainViewController.swift */,
-				A0C941281B512D6900833D17 /* LessonViewController.swift */,
 				A0DF80561B5298A400FEAB2A /* GalleryViewController.swift */,
+				A0EF02F11B75E07500C48350 /* LessonContentTableViewCell.swift */,
+				A0EF02F31B76566600C48350 /* ThumbnailImageTableViewCell.swift */,
+				A0C941281B512D6900833D17 /* LessonViewController.swift */,
 				A0E03D6F1B50C747007A649F /* Main.storyboard */,
 				A0E03D721B50C747007A649F /* Images.xcassets */,
 				A0E03D741B50C747007A649F /* LaunchScreen.xib */,
@@ -373,8 +379,10 @@
 			files = (
 				A00C4D231B50F3EF0037B994 /* MainViewController.swift in Sources */,
 				A0C941361B52796300833D17 /* ThumbnailCollectionViewCell.swift in Sources */,
+				A0EF02F41B76566600C48350 /* ThumbnailImageTableViewCell.swift in Sources */,
 				A0E03D6C1B50C747007A649F /* AppDelegate.swift in Sources */,
 				A0C941381B527C0000833D17 /* Lesson.swift in Sources */,
+				A0EF02F21B75E07500C48350 /* LessonContentTableViewCell.swift in Sources */,
 				A00C4D271B50F4470037B994 /* MainItemView.swift in Sources */,
 				A0C9412B1B5132F300833D17 /* UIImageColors.swift in Sources */,
 				A0DF80571B5298A400FEAB2A /* GalleryViewController.swift in Sources */,

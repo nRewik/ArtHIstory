@@ -12,11 +12,11 @@ extension UILabel{
     
     func adjustFontSizeToFitRect(rect : CGRect){
         
-        if self.text == nil{
+        if text == nil{
             return
         }
         
-        self.frame = rect
+        frame = rect
         
         var maxFontSize: CGFloat = 100.0
         let minFontSize: CGFloat = 5.0
@@ -28,18 +28,24 @@ extension UILabel{
         
         while(p <= q){
             let currentSize = (p + q) / 2
-            self.font = self.font.fontWithSize( CGFloat(currentSize) )
-            let text = NSAttributedString(string: self.text!, attributes: [NSFontAttributeName:self.font])
+            font = font.fontWithSize( CGFloat(currentSize) )
+            let text = NSAttributedString(string: self.text!, attributes: [NSFontAttributeName:font])
             let textRect = text.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil)
             
             let labelSize = textRect.size
             
-            if labelSize.height <= self.frame.height{
-                p = currentSize + 1
-            }else{
+            if labelSize.height < frame.height &&
+                labelSize.height >= frame.height-10 &&
+                labelSize.width < frame.width &&
+                labelSize.width >= frame.width-10 {
+                break
+            }else if labelSize.height > frame.height || labelSize.width > frame.width{
                 q = currentSize - 1
+            }else{
+                p = currentSize + 1
             }
         }
+        
     }
 }
 
