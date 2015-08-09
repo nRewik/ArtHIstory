@@ -128,7 +128,7 @@ extension LessonViewController: UITableViewDataSource{
             let thumbnailImageCell = tableView.dequeueReusableCellWithIdentifier("ThumbnailImageTableViewCell") as! ThumbnailImageTableViewCell
 
             thumbnailImageCell.thumbnailImage = Lesson.getImageFromIndex(indexPath.row)
-            thumbnailImageCell.title = "Writing your name with MyNamePix is easy and fast."
+            thumbnailImageCell.title = "Node.js"
             
             return thumbnailImageCell
         }
@@ -145,8 +145,8 @@ extension LessonViewController: UITableViewDelegate{
         
         if indexPath.section == 1{
 
-            let thumbnailHeight = view.frame.height / 5.0
-            let expandThumbnailHeight: CGFloat = 250.0
+            let thumbnailHeight = view.frame.height / 3.0
+            let expandThumbnailHeight: CGFloat = view.frame.height / 2.0
             
             if let selectedIndexPath = selectedIndexPath{
                 return selectedIndexPath == indexPath ? expandThumbnailHeight : thumbnailHeight
