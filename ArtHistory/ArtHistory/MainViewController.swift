@@ -9,9 +9,13 @@
 import UIKit
 import BubbleTransition
 import ChameleonFramework
+import SwiftyJSON
 
 class MainViewController: UIViewController {
 
+    
+    private var artHistory = ArtHistory()
+    private var itemMap: [MainItemView:Lesson] = [:]
     
     private let transition = BubbleTransition()
     
@@ -51,17 +55,19 @@ class MainViewController: UIViewController {
                 let yOffset = rowHeight * CGFloat(row)
                 let itemFrame = CGRect(x: xOffset, y: yOffset, width: itemWidth, height: rowHeight)
                 let item = MainItemView(frame: itemFrame)
-                item.image = getImageFromIndex(count)
-                item.text = ["Medival Art","Romesque","The Art of Greece","Early Christian and Bazantine"][count%4]
+                item.image = artHistory.lessons[count].image
+                item.text = artHistory.lessons[count].title
                 item.action = {
                     let localCenter = item.circleCenter
                     self.itemCenter = self.view.convertPoint(localCenter, fromView: item)
                     self.selectedItem = item
                     self.performSegueWithIdentifier("showLesson", sender: nil)
                 }
-                count++
                 itemRow += [item]
+                itemMap[item] = artHistory.lessons[count]
                 scrollView.addSubview(item)
+                
+                count++
             }
             itemRows += [ itemRow ]
         }
@@ -74,9 +80,9 @@ class MainViewController: UIViewController {
             for col in 0..<numberOfItemsPerRow{
                 let item = currentRow[col]
                 let springBehavior = UIAttachmentBehavior(item: item, attachedToAnchor: item.center)
-                springBehavior.length = 0.0
-                springBehavior.damping = 0.8
-                springBehavior.frequency = 1.0
+                springBehavior.length = 5.0
+                springBehavior.damping = 1.0
+                springBehavior.frequency = 2.0
                 
                 //lock x coordinate
                 let xCoordinate = item.frame.origin.x
@@ -89,10 +95,41 @@ class MainViewController: UIViewController {
         }
         
     }
+    
+    private func loadJSONData(){
+        let dataPath = NSBundle.mainBundle().pathForResource("art_history_data", ofType: "json")!
+        let data = NSData(contentsOfFile: dataPath)!
+        
+        let json = JSON(data: data)
+        
+        for (index,(_,lessonJSON)) in enumerate(json["lessons"]){
+            
+            var newLesson = Lesson()
+            
+            newLesson.title = lessonJSON["title"].string!
+            newLesson.detail = lessonJSON["content"].string!
+            newLesson.image = UIImage(named: "lesson-\(index+1).png")!
+            
+            newLesson.lessonGallery = [ArtHistoryImage]()
+            for (index,(_,imageJSON)) in enumerate(lessonJSON["images"]){
+                
+                var artHistoryImage = ArtHistoryImage()
+                artHistoryImage.title = imageJSON["title"].string!
+                artHistoryImage.subtitle = imageJSON["subtitle"].string!
+                artHistoryImage.image = UIImage(named: imageJSON["name"].string!)!
+                
+                newLesson.lessonGallery! += [artHistoryImage]
+            }
+            artHistory.lessons += [newLesson]
+        }
+
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        loadJSONData()
+        
         setupItem()
         let topInset = topView.frame.height + 20.0
         scrollView.contentInset = UIEdgeInsets(top: topInset, left: 0, bottom: 0, right: 0)
@@ -108,7 +145,8 @@ class MainViewController: UIViewController {
                 lessonVC.transitioningDelegate = self
                 lessonVC.modalPresentationStyle = .Custom
                 
-                lessonVC.colorTone = selectedItem.image?.getColors()
+                lessonVC.colorTone = selectedItem.image?.getColors(CGSize(width: 25, height: 25))
+                lessonVC.lesson = itemMap[selectedItem]!
             }
         }
 
@@ -122,7 +160,7 @@ class MainViewController: UIViewController {
 // MARK: UIScrollViewDelegate
 extension MainViewController: UIScrollViewDelegate{
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        
+
         //update UIKit Dynamic
         let delta = scrollView.contentOffset.y - lastOffset
         for behavior in animator.behaviors{
@@ -150,14 +188,14 @@ extension MainViewController: UIViewControllerTransitioningDelegate{
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.transitionMode = .Present
         transition.startingPoint = itemCenter
-        transition.bubbleColor = selectedItem.image?.getColors().backgroundColor ?? UIColor.flatWhiteColor()
+        transition.bubbleColor = selectedItem.image?.getColors(CGSize(width: 25, height: 25)).backgroundColor ?? UIColor.flatWhiteColor()
         return transition
     }
     
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.transitionMode = .Dismiss
         transition.startingPoint = itemCenter
-        transition.bubbleColor = selectedItem.image?.getColors().backgroundColor ?? UIColor.flatWhiteColor()
+        transition.bubbleColor = selectedItem.image?.getColors(CGSize(width: 25, height: 25)).backgroundColor ?? UIColor.flatWhiteColor()
         return transition
     }
 }

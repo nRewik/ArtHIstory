@@ -13,18 +13,40 @@ class ThumbnailImageTableViewCell: UITableViewCell {
     var thumbnailImage: UIImage?{
         didSet{
             thumbnailImageView?.image = thumbnailImage
+            
+            
+            // update ratio of image
+            [ratioConstraint_ImageVIew].map(thumbnailImageView.removeConstraint)
+            
+            var ratio: CGFloat = 0.0
+            if let thumbnailImage = thumbnailImage{
+                ratio = thumbnailImage.size.width / thumbnailImage.size.height
+            }
+            ratioConstraint_ImageVIew = NSLayoutConstraint(item: thumbnailImageView, attribute: NSLayoutAttribute.Width, relatedBy: .Equal, toItem: thumbnailImageView, attribute: .Height, multiplier: ratio, constant: 0)
+            
+            thumbnailImageView.addConstraint(ratioConstraint_ImageVIew)
+            
         }
     }
     var title: String?{
         didSet{
             titleLabel?.text = title
-//            layoutIfNeeded()
+            // layoutIfNeeded()
+        }
+    }
+    var subtitle: String?{
+        didSet{
+            descriptionLabel?.text = subtitle
         }
     }
     
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    
+    @IBOutlet var ratioConstraint_ImageVIew: NSLayoutConstraint!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
