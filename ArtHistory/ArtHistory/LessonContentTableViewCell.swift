@@ -14,7 +14,6 @@ class LessonContentTableViewCell: UITableViewCell {
     var contentText: String?{
         didSet{
             contentLabel.text = contentText
-            layoutIfNeeded()
         }
     }
     

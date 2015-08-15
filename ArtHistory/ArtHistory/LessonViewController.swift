@@ -13,16 +13,24 @@ import BubbleTransition
 
 class LessonViewController: UIViewController {
     
-    var selectedIndexPath: NSIndexPath?
+    var lesson: Lesson!
     
     var colorTone: UIImageColors!
-    let transition = BubbleTransition()
-    
+
     var lessonContentHeight: CGFloat{
-        return 500
+        
+        let titleAttributedString = NSAttributedString(string: lesson.detail, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue-Thin", size: 18)!])
+        
+        
+        let constraintedSize = CGSize(width: tableView.frame.width-30, height: 9999.0)
+        
+        let titleHeight = titleAttributedString.boundingRectWithSize(constraintedSize, options: .UsesLineFragmentOrigin, context: nil).height
+        
+        return 20 + titleHeight + 20
     }
+    
     var minimumTopViewHeight: CGFloat{
-        return 65.0
+        return 67.5
     }
     var maximumTopViewHeight: CGFloat{
         return 150.0
@@ -31,10 +39,12 @@ class LessonViewController: UIViewController {
     @IBOutlet weak var topSpace_headViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var heightConstraint_headView: NSLayoutConstraint!
     
+    @IBOutlet weak var statusBarOverlayView: UIView!
+    
     @IBOutlet weak var headView: UIView!
+    @IBOutlet weak var headImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
-    
     
     @IBOutlet weak var tableView: UITableView!
 
@@ -53,11 +63,11 @@ class LessonViewController: UIViewController {
         // Do any additional setup after loading the view.
         setupInset()
         setupShadow()
-        backButton.titleLabel?.font = UIFont.fontAwesomeOfSize(30.0)
+        backButton.titleLabel?.font = UIFont.fontAwesomeOfSize(35.0)
         backButton.setTitle(String.fontAwesomeIconWithName(.ChevronCircleLeft), forState: .Normal)
         
-        // tableView.rowHeight = UITableViewAutomaticDimension
-        // tableView.estimatedRowHeight = 44.0
+        headImageView.image = lesson.image
+        titleLabel.text = lesson.title
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -72,20 +82,16 @@ class LessonViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        backButton.setTitleColor(colorTone.backgroundColor, forState: .Normal)
-        titleLabel.textColor = colorTone.backgroundColor
         
+        backButton.setTitleColor(UIColor.flatBlackColor(), forState: .Normal)
+        backButton.setTitleColor(UIColor.flatWhiteColor(), forState: .Highlighted)
+        backButton.setTitleColor(UIColor.flatWhiteColor(), forState: .Selected)
+
+        titleLabel.textColor = UIColor.flatBlackColor()
+        
+        statusBarOverlayView.backgroundColor = colorTone.backgroundColor
+
         flatifyAndContrast()
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showGallery"{
-            if let lessonVC = segue.destinationViewController as? GalleryViewController {
-                
-                lessonVC.transitioningDelegate = self
-                lessonVC.modalPresentationStyle = .Custom
-            }
-        }
     }
     
     @IBAction func unwindToLessonView(segue: UIStoryboardSegue){
@@ -106,7 +112,7 @@ extension LessonViewController: UITableViewDataSource{
         case 0:
             return 1
         case 1:
-            return 10
+            return lesson.lessonGallery?.count ?? 0
         default:
             return 0
         }
@@ -118,21 +124,22 @@ extension LessonViewController: UITableViewDataSource{
         if indexPath.section == 0{
             let contentCell = tableView.dequeueReusableCellWithIdentifier("LessonContentTableViewCell") as! LessonContentTableViewCell
             
-            contentCell.contentText = "เกรดเปราะบางเฟอร์นิเจอร์ รันเวย์ไคลแม็กซ์ไคลแม็กซ์ ไฟต์ทัวร์นาเมนท์อยุติธรรมเปเปอร์นพมาศ ตุ๊กตุ๊กอิสรชนช็อปปิ้ง บาร์บี้ พุทธภูมิ เอฟเฟ็กต์ตุ๊กตุ๊กเมคอัพ กลาสบุ๋นโบว์ลิ่งจัมโบ้พิซซ่า หม่านโถว โยโย่ธรรมาภิบาลแอปเปิล ควิกสโตร์แฮปปี้ สตีลโพลารอยด์ คอลัมน์แซมบ้าซิตี อีโรติกแพนงเชิญโดนัทเทค\n\nโนแครต คาเฟ่แบล็กเยนจ๊าบ เมจิคนพมาศแบล็ก แคร็กเกอร์ภูมิทัศน์บอกซ์แบ็กโฮเอ็กซ์โป ผิดพลาดเทรลเลอร์ ขั้นตอน แดนเซอร์ป๊อปฮ็อต บรรพชนฟยอร์ดกฤษณ์ แอ็คชั่นคำตอบโต๊ะจีน แคมเปญถ่ายทำเพลย์บอย ไดเอ็ต ดีเจ แต๋วไวอะกร้าเซ็กส์ลิมูซีนรามาธิบดี ไกด์ธัมโม รีพอร์ทฟิวเจอร์โอวัลตินล็อต แจ๊กพ็อตออทิสติกขั้นตอนมั้งบร็อกโคลี แอดมิสชันคำตอบ ฮอตดอก บึ้มมะกันเสกสรรค์ดิกชันนารีเพลย์บอย ดีไซน์เนอร์สเตชั่นลอจิสติกส์ซิลเวอร์ บอกซ์มาราธอนดีกรีอพาร์ตเมนต์เมคอัพ ไฟแนนซ์เจี๊ยว\n\nวอลซ์ไฮไลต์ แลนด์วิก อ่วมก่อนหน้า ฮาร์ดแอดมิชชั่น เซ็กส์เอาต์ทริป เวิลด์กรอบรูป สเตอริโอเรซินฮาร์ดแซมบ้าไบเบิล ธุหร่ำ สัมนาผ้าห่ม ตรวจสอบโรลออน ช็อปปิ้งวีซ่า﻿กรรมาชนชนะเลิศเซฟตี้ น็อค สปาแพกเกจวอฟเฟิล วินแรงใจ แฟ้บเซ็กซี่ยูวี ว้อดก้านินจาโปรสหัสวรรษอพาร์ตเมนต์ แมชีนเลกเชอร์ ทอร์นาโดโปรดักชั่นบลูเบอร์\n\nรีชินบัญชร ซีเนียร์สจ๊วตฮีโร่ อึมครึม วีซ่าธรรมาภิบาลฟลุตโปรโมเตอร์ วีซ่าฮ่องเต้โซน เบิร์นเอ็นทรานซ์สเตชั่นเบลอไทเฮา ฟลุคป๊อกไฮเปอร์อุปการคุณ บิ๊ก ดิสเครดิตแมชชีนบูติกดีพาร์ทเมนต์วีไอพี ช็อปเปอร์ช็อปเปอร์ เทปบาร์บีคิวโก๊ะแจ๊กพอตสะบึมส์ ซีนเจ๊าะแจ๊ะจูนแฟ็กซ์ เบญจมบพิตร เอ๊าะอุรังคธาตุช็อต โอเวอร์ฟิวเจอร์\n\nพาเหรด โทร จิ๊กโก๋สปาย เจ็ตเฟอร์นิเจอร์ ภคันทลาพาธโปรเจกเตอร์ วอเตอร์เซ็กซี่ ลอจิสติกส์ตื้บเสือโคร่งลาติน ไทยแลนด์มัฟฟินซิ้ม ตรวจทานเคลื่อนย้ายลอร์ด เฟอร์รี่คาสิโนบัลลาสต์โฮลวีต พาสตาละติน ริกเตอร์ สี่แยกวิลล์ราเมนโบรกเกอร์ไชน่า เฟิร์มชีสตังค์ ดีไซน์เวิลด์"
+            contentCell.contentText = lesson.detail
             
             return contentCell
         }
         
         if indexPath.section == 1{
             
-            let thumbnailImageCell = tableView.dequeueReusableCellWithIdentifier("ThumbnailImageTableViewCell") as! ThumbnailImageTableViewCell
-
-            thumbnailImageCell.thumbnailImage = Lesson.getImageFromIndex(indexPath.row)
-            thumbnailImageCell.title = "Node.js"
-            
-            return thumbnailImageCell
+            if let thumbnailImageCell = tableView.dequeueReusableCellWithIdentifier("ThumbnailImageTableViewCell") as? ThumbnailImageTableViewCell, lessonGallery = lesson.lessonGallery{
+                
+                thumbnailImageCell.thumbnailImage = lessonGallery[indexPath.row].image
+                thumbnailImageCell.title = lessonGallery[indexPath.row].title
+                thumbnailImageCell.subtitle = lessonGallery[indexPath.row].subtitle
+                
+                return thumbnailImageCell
+            }
         }
-        
         return UITableViewCell()
     }
     
@@ -141,47 +148,79 @@ extension LessonViewController: UITableViewDataSource{
 //MARK: TableView Delegate
 extension LessonViewController: UITableViewDelegate{
     
+    //MARK: calculate table height
+    private func thumbnailImageTitleHeightForRow(row: Int) -> CGFloat{
+        
+        if lesson.lessonGallery == nil{
+            return 0
+        }
+        let artHistoryImage = lesson.lessonGallery![row]
+        
+        let titleAttributedString = NSAttributedString(string: artHistoryImage.title, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue-Medium", size: 22)!])
+        
+        
+        let constraintedSize = CGSize(width: tableView.frame.width-20, height: 9999.0)
+        
+        let titleHeight = titleAttributedString.boundingRectWithSize(constraintedSize, options: .UsesLineFragmentOrigin, context: nil).height
+
+        return titleHeight
+    }
+    private func thumbnailImageSubtitleHeightForRow(row: Int) -> CGFloat{
+        
+        if lesson.lessonGallery == nil{
+            return 0
+        }
+        let artHistoryImage = lesson.lessonGallery![row]
+        
+        let titleAttributedString = NSAttributedString(string: artHistoryImage.subtitle, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue-Light", size: 17)!])
+        
+        let constraintedSize = CGSize(width: tableView.frame.width-30, height: 9999.0)
+        
+        let titleHeight = titleAttributedString.boundingRectWithSize(constraintedSize, options: .UsesLineFragmentOrigin, context: nil).height
+        
+        return titleHeight
+    }
+    private func thumbnailImageHeightForRow(row: Int) -> CGFloat{
+        
+        if lesson.lessonGallery == nil || lesson.lessonGallery![row].image == nil{
+            return 0
+        }
+        
+        let image = lesson.lessonGallery![row].image!
+        
+        // guard divide by zero
+        if image.size.height - 0.0 < 0.001{
+            return 0
+        }
+        
+        let ratio = image.size.width / image.size.height
+        return tableView.frame.width / ratio
+    }
+    
+    
+    private func heightForThumbnailImageCellForRow(row :Int) -> CGFloat{
+        
+        let titleHeight = thumbnailImageTitleHeightForRow(row)
+        let imageHeight = thumbnailImageHeightForRow(row)
+        let subtitleHeight = thumbnailImageSubtitleHeightForRow(row)
+        
+        let totalHeight = 10 + titleHeight + 10 + imageHeight + 10 + subtitleHeight + 10 + 15
+        
+        return totalHeight
+    }
+    
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         if indexPath.section == 1{
-
-            let thumbnailHeight = view.frame.height / 3.0
-            let expandThumbnailHeight: CGFloat = view.frame.height / 2.0
-            
-            if let selectedIndexPath = selectedIndexPath{
-                return selectedIndexPath == indexPath ? expandThumbnailHeight : thumbnailHeight
-            }
-            return thumbnailHeight
+            let thumbnailImageCellHeight = heightForThumbnailImageCellForRow(indexPath.row)
+            return thumbnailImageCellHeight
         }
         return lessonContentHeight
     }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        if indexPath.section != 1{
-            return
-        }
 
-        var isDeselectedThumbnail = false
-        if let selectedIndexPath = selectedIndexPath{
-            if selectedIndexPath == indexPath{
-                isDeselectedThumbnail = true
-            }
-        }
-        
-        if isDeselectedThumbnail{
-            selectedIndexPath = nil
-        }else{
-            selectedIndexPath = indexPath
-        }
-        
-        tableView.beginUpdates()
-        tableView.endUpdates()
-        
-        tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Middle, animated: true)
-    }
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        return indexPath.section != 0 ? indexPath : nil
+        return nil
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -225,21 +264,4 @@ extension LessonViewController: UITableViewDelegate{
         titleLabel.adjustFontSizeToFitRect(titleRect)
     }
     
-}
-
-// MARK: UIViewControllerTransitioningDelegate
-extension LessonViewController: UIViewControllerTransitioningDelegate{
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.transitionMode = .Present
-//        transition.startingPoint = view.convertPoint(playGalleryButton.center, fromView: playGalleryView)
-        transition.bubbleColor = colorTone.backgroundColor
-        return transition
-    }
-    
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.transitionMode = .Dismiss
-//        transition.startingPoint = view.convertPoint(playGalleryButton.center, fromView: playGalleryView)
-        transition.bubbleColor = colorTone.backgroundColor
-        return transition
-    }
 }

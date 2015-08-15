@@ -2,3 +2,4 @@ use_frameworks!
 pod 'ChameleonFramework/Swift'
 pod 'BubbleTransition', '~> 0.1'
 pod 'FontAwesome.swift'
+pod 'SwiftyJSON', '~> 2.2.1'
