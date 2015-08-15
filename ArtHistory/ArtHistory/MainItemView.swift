@@ -22,6 +22,7 @@ import UIKit
     }
     @IBInspectable var image:UIImage?{
         didSet{
+            button.imageView?.contentMode = .ScaleAspectFill
             button.setImage(image, forState: .Normal)
         }
     }

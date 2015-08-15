@@ -12,69 +12,69 @@ import ChameleonFramework
 import BubbleTransition
 
 class LessonViewController: UIViewController {
-
+    
+    var lesson: Lesson!
     
     var colorTone: UIImageColors!
-    let transition = BubbleTransition()
+
+    var lessonContentHeight: CGFloat{
+        
+        let titleAttributedString = NSAttributedString(string: lesson.detail, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue-Thin", size: 18)!])
+        
+        
+        let constraintedSize = CGSize(width: tableView.frame.width-30, height: 9999.0)
+        
+        let titleHeight = titleAttributedString.boundingRectWithSize(constraintedSize, options: .UsesLineFragmentOrigin, context: nil).height
+        
+        return 20 + titleHeight + 20
+    }
     
+    var minimumTopViewHeight: CGFloat{
+        return 67.5
+    }
+    var maximumTopViewHeight: CGFloat{
+        return 150.0
+    }
     
-    @IBOutlet weak var heightConstraint_topBlurView: NSLayoutConstraint!
+    @IBOutlet weak var topSpace_headViewConstraint: NSLayoutConstraint!
+    @IBOutlet weak var heightConstraint_headView: NSLayoutConstraint!
     
-    @IBOutlet weak var behindTopBlurView: UIView!
-    @IBOutlet weak var topBlurView: UIVisualEffectView!
-    @IBOutlet weak var topViewContent: UIView!
+    @IBOutlet weak var statusBarOverlayView: UIView!
+    
+    @IBOutlet weak var headView: UIView!
+    @IBOutlet weak var headImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     
-    @IBOutlet weak var bottomBlurView: UIVisualEffectView!
-    @IBOutlet weak var bottomViewContent: UIView!
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var playGalleryView: UIView!
-    @IBOutlet weak var playGalleryButton: UIButton!
-    
-    @IBOutlet weak var textView: UITextView!
-    
+    @IBOutlet weak var tableView: UITableView!
+
     func setupInset(){
-        let topInset = topBlurView.frame.height
-        let bottomInset = bottomBlurView.frame.height
-        let margin: CGFloat = 20.0
-        let sideInset: CGFloat = 15.0
-        textView.textContainerInset = UIEdgeInsets(top: topInset+margin, left: sideInset, bottom: bottomInset+margin, right: sideInset)
-        textView.setContentOffset(CGPoint(x: 0, y: -textView.contentInset.top), animated: false)
+        tableView.contentInset = UIEdgeInsets(top: maximumTopViewHeight, left: 0, bottom: 0, right: 0)
     }
     func setupShadow(){
-        topBlurView.layer.shadowColor = UIColor.flatBlackColor().CGColor
-        topBlurView.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        topBlurView.layer.shadowOpacity = 0.3
+        headView.layer.shadowColor = UIColor.flatBlackColor().CGColor
+        headView.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        headView.layer.shadowOpacity = 0.3
         
-        bottomBlurView.layer.shadowColor = UIColor.flatBlackColor().CGColor
-        bottomBlurView.layer.shadowOffset = CGSize(width: 0.0, height: -1.0)
-        bottomBlurView.layer.shadowOpacity = 0.3
     }
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.layoutIfNeeded()
         setupInset()
         setupShadow()
-        backButton.titleLabel?.font = UIFont.fontAwesomeOfSize(30.0)
+        backButton.titleLabel?.font = UIFont.fontAwesomeOfSize(35.0)
         backButton.setTitle(String.fontAwesomeIconWithName(.ChevronCircleLeft), forState: .Normal)
         
-        playGalleryButton.titleLabel?.font = UIFont.fontAwesomeOfSize(40.0)
-        playGalleryButton.setTitle( String.fontAwesomeIconWithName(.Play), forState: .Normal)
+        headImageView.image = lesson.image
+        titleLabel.text = lesson.title
         
-        textView.delegate = self
+        tableView.dataSource = self
+        tableView.delegate = self
         
         adjustTitleLabelFontSize()
+        view.layoutIfNeeded()
         
-        collectionView.contentInset = UIEdgeInsets(top: 0.0, left: 10.0, bottom: 0.0, right: playGalleryView.frame.width+10)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        //setup flowLayout.itemSize
-        let flowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        let length = collectionView.frame.height - 10.0
-        flowLayout.itemSize = CGSize(width: length, height: length)
     }
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return ChameleonStatusBar.statusBarStyleForColor(colorTone.backgroundColor)
@@ -82,29 +82,16 @@ class LessonViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        backButton.setTitleColor(colorTone.backgroundColor, forState: .Normal)
-        titleLabel.textColor = colorTone.backgroundColor
         
-        playGalleryView.backgroundColor = colorTone.backgroundColor
-        let playButtonColor = UIColor(contrastingBlackOrWhiteColorOn: colorTone.backgroundColor, isFlat: true)
-        playGalleryButton.setTitleColor( playButtonColor, forState: .Normal)
+        backButton.setTitleColor(UIColor.flatBlackColor(), forState: .Normal)
+        backButton.setTitleColor(UIColor.flatWhiteColor(), forState: .Highlighted)
+        backButton.setTitleColor(UIColor.flatWhiteColor(), forState: .Selected)
+
+        titleLabel.textColor = UIColor.flatBlackColor()
         
-        let gradientColor = UIColor(gradientStyle: .TopToBottom, withFrame: behindTopBlurView.frame, andColors: [colorTone.backgroundColor,UIColor.flatWhiteColor()])
-        behindTopBlurView.backgroundColor = gradientColor
-        
+        statusBarOverlayView.backgroundColor = colorTone.backgroundColor
+
         flatifyAndContrast()
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showGallery"{
-            if let lessonVC = segue.destinationViewController as? GalleryViewController {
-                
-                lessonVC.transitioningDelegate = self
-                lessonVC.modalPresentationStyle = .Custom
-                
-//                lessonVC.colorTone = selectedItem.image?.getColors()
-            }
-        }
     }
     
     @IBAction func unwindToLessonView(segue: UIStoryboardSegue){
@@ -113,76 +100,168 @@ class LessonViewController: UIViewController {
 
 }
 
-extension LessonViewController: UICollectionViewDataSource{
+extension LessonViewController: UITableViewDataSource{
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
     }
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ThumbnailCollectionViewCell", forIndexPath: indexPath) as! ThumbnailCollectionViewCell
-        cell.image = Lesson.getImageFromIndex(indexPath.row)
-        cell.action = {
-            let actualIndexPath = collectionView.indexPathForCell(cell)!
-            println(actualIndexPath)
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        switch(section){
+        case 0:
+            return 1
+        case 1:
+            return lesson.lessonGallery?.count ?? 0
+        default:
+            return 0
         }
-        return cell
     }
-}
-extension LessonViewController: UICollectionViewDelegate{
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        println("select \(indexPath.row)")
-    }
-}
-extension LessonViewController: UITextViewDelegate{
-    
-    var minimumTopViewHeight: CGFloat{
-        return 60.0
-    }
-    var maximumTopViewHeight: CGFloat{
-        return 150.0
-    }
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if scrollView != textView{
-            return
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        
+        if indexPath.section == 0{
+            let contentCell = tableView.dequeueReusableCellWithIdentifier("LessonContentTableViewCell") as! LessonContentTableViewCell
+            
+            contentCell.contentText = lesson.detail
+            
+            return contentCell
         }
         
-        let currentYOffset = scrollView.contentOffset.y
-        let topViewHeight = maximumTopViewHeight - currentYOffset
-        let newHeight = max( minimumTopViewHeight , topViewHeight)
-        
-        heightConstraint_topBlurView.constant = newHeight
-        
-        if newHeight < maximumTopViewHeight{
-            adjustTitleLabelFontSize()
+        if indexPath.section == 1{
+            
+            if let thumbnailImageCell = tableView.dequeueReusableCellWithIdentifier("ThumbnailImageTableViewCell") as? ThumbnailImageTableViewCell, lessonGallery = lesson.lessonGallery{
+                
+                thumbnailImageCell.thumbnailImage = lessonGallery[indexPath.row].image
+                thumbnailImageCell.title = lessonGallery[indexPath.row].title
+                thumbnailImageCell.subtitle = lessonGallery[indexPath.row].subtitle
+                
+                return thumbnailImageCell
+            }
         }
-        
-        view.layoutIfNeeded()
-    }
-    func adjustTitleLabelFontSize(){
-        var titleRect = titleLabel.frame
-        titleRect.size.height = topBlurView.frame.height - 30
-        titleLabel.adjustFontSizeToFitRect(titleRect)
+        return UITableViewCell()
     }
     
 }
 
-// MARK: UIViewControllerTransitioningDelegate
-extension LessonViewController: UIViewControllerTransitioningDelegate{
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.transitionMode = .Present
-        transition.startingPoint = view.convertPoint(playGalleryButton.center, fromView: playGalleryView)
-        transition.bubbleColor = colorTone.backgroundColor
-        return transition
+//MARK: TableView Delegate
+extension LessonViewController: UITableViewDelegate{
+    
+    //MARK: calculate table height
+    private func thumbnailImageTitleHeightForRow(row: Int) -> CGFloat{
+        
+        if lesson.lessonGallery == nil{
+            return 0
+        }
+        let artHistoryImage = lesson.lessonGallery![row]
+        
+        let titleAttributedString = NSAttributedString(string: artHistoryImage.title, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue-Medium", size: 22)!])
+        
+        
+        let constraintedSize = CGSize(width: tableView.frame.width-20, height: 9999.0)
+        
+        let titleHeight = titleAttributedString.boundingRectWithSize(constraintedSize, options: .UsesLineFragmentOrigin, context: nil).height
+
+        return titleHeight
+    }
+    private func thumbnailImageSubtitleHeightForRow(row: Int) -> CGFloat{
+        
+        if lesson.lessonGallery == nil{
+            return 0
+        }
+        let artHistoryImage = lesson.lessonGallery![row]
+        
+        let titleAttributedString = NSAttributedString(string: artHistoryImage.subtitle, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue-Light", size: 17)!])
+        
+        let constraintedSize = CGSize(width: tableView.frame.width-30, height: 9999.0)
+        
+        let titleHeight = titleAttributedString.boundingRectWithSize(constraintedSize, options: .UsesLineFragmentOrigin, context: nil).height
+        
+        return titleHeight
+    }
+    private func thumbnailImageHeightForRow(row: Int) -> CGFloat{
+        
+        if lesson.lessonGallery == nil || lesson.lessonGallery![row].image == nil{
+            return 0
+        }
+        
+        let image = lesson.lessonGallery![row].image!
+        
+        // guard divide by zero
+        if image.size.height - 0.0 < 0.001{
+            return 0
+        }
+        
+        let ratio = image.size.width / image.size.height
+        return tableView.frame.width / ratio
     }
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        transition.transitionMode = .Dismiss
-        transition.startingPoint = view.convertPoint(playGalleryButton.center, fromView: playGalleryView)
-        transition.bubbleColor = colorTone.backgroundColor
-        return transition
+    
+    private func heightForThumbnailImageCellForRow(row :Int) -> CGFloat{
+        
+        let titleHeight = thumbnailImageTitleHeightForRow(row)
+        let imageHeight = thumbnailImageHeightForRow(row)
+        let subtitleHeight = thumbnailImageSubtitleHeightForRow(row)
+        
+        let totalHeight = 10 + titleHeight + 10 + imageHeight + 10 + subtitleHeight + 10 + 15
+        
+        return totalHeight
     }
+    
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if indexPath.section == 1{
+            let thumbnailImageCellHeight = heightForThumbnailImageCellForRow(indexPath.row)
+            return thumbnailImageCellHeight
+        }
+        return lessonContentHeight
+    }
+
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        return nil
+    }
+
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        if scrollView != tableView{
+            return
+        }
+        
+        //println(scrollView.contentOffset.y)
+        let currentYOffset = scrollView.contentOffset.y + tableView.contentInset.top
+        let topViewHeight = maximumTopViewHeight - currentYOffset
+        let newHeight = max( minimumTopViewHeight , topViewHeight)
+        
+        heightConstraint_headView.constant = newHeight
+        //println("\(newHeight)")
+
+        //calculate new fontsize after adjust headview
+        if newHeight < maximumTopViewHeight - 5{
+            adjustTitleLabelFontSize()
+        }
+        
+        
+        //hide topbar when scroll far than lesson content
+        let beginYoffsetThumbnailZone = lessonContentHeight - minimumTopViewHeight
+        if scrollView.contentOffset.y > beginYoffsetThumbnailZone{
+            let delta = scrollView.contentOffset.y - beginYoffsetThumbnailZone
+            topSpace_headViewConstraint.constant = max(-minimumTopViewHeight,-delta)
+        }else{
+            topSpace_headViewConstraint.constant = 0
+        }
+        
+        
+        
+        view.layoutIfNeeded()
+        
+    }
+    func adjustTitleLabelFontSize(){
+        var titleRect = titleLabel.frame
+        titleRect.size.width -= 5
+        titleRect.size.height = headView.frame.height - 40
+        titleLabel.adjustFontSizeToFitRect(titleRect)
+    }
+    
 }
