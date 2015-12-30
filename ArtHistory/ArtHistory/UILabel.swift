@@ -18,7 +18,7 @@ extension UILabel{
         
         frame = rect
         
-        var maxFontSize: CGFloat = 100.0
+        let maxFontSize: CGFloat = 100.0
         let minFontSize: CGFloat = 5.0
         
         var q = Int(maxFontSize)

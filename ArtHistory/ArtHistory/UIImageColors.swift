@@ -28,52 +28,22 @@ class PCCountedColor {
 extension UIColor {
     
     public var isDarkColor: Bool {
-        var RGB = CGColorGetComponents(self.CGColor)
+        let RGB = CGColorGetComponents(self.CGColor)
         return (0.2126 * RGB[0] + 0.7152 * RGB[1] + 0.0722 * RGB[2]) < 0.5
     }
     
     public var isBlackOrWhite: Bool {
-        var RGB = CGColorGetComponents(self.CGColor)
+        let RGB = CGColorGetComponents(self.CGColor)
         return (RGB[0] > 0.91 && RGB[1] > 0.91 && RGB[2] > 0.91) || (RGB[0] < 0.09 && RGB[1] < 0.09 && RGB[2] < 0.09)
     }
     
-    public func isDistinct(compareColor: UIColor) -> Bool {
-        var bg = CGColorGetComponents(self.CGColor)
-        var fg = CGColorGetComponents(compareColor.CGColor)
-        var threshold: CGFloat = 0.25
-        
-        if fabs(bg[0] - fg[0]) > threshold || fabs(bg[1] - fg[1]) > threshold || fabs(bg[2] - fg[2]) > threshold {
-            if fabs(bg[0] - bg[1]) < 0.03 && fabs(bg[0] - bg[2]) < 0.03 {
-                if fabs(fg[0] - fg[1]) < 0.03 && fabs(fg[0] - fg[2]) < 0.03 {
-                    return false
-                }
-            }
-            return true
-        }
-        return false
-    }
-    
-    public func colorWithMinimumSaturation(minSaturation: CGFloat) -> UIColor {
-        var hue: CGFloat = 0.0
-        var saturation: CGFloat = 0.0
-        var brightness: CGFloat = 0.0
-        var alpha: CGFloat = 0.0
-        self.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha)
-        
-        if saturation < minSaturation {
-            return UIColor(hue: hue, saturation: minSaturation, brightness: brightness, alpha: alpha)
-        } else {
-            return self
-        }
-    }
-    
     public func isContrastingColor(compareColor: UIColor) -> Bool {
-        var bg = CGColorGetComponents(self.CGColor)
-        var fg = CGColorGetComponents(compareColor.CGColor)
+        let bg = CGColorGetComponents(self.CGColor)
+        let fg = CGColorGetComponents(compareColor.CGColor)
         
-        var bgLum = 0.2126 * bg[0] + 0.7152 * bg[1] + 0.0722 * bg[2]
-        var fgLum = 0.2126 * fg[0] + 0.7152 * fg[1] + 0.0722 * fg[2]
-        var contrast = (bgLum > fgLum) ? (bgLum + 0.05)/(fgLum + 0.05):(fgLum + 0.05)/(bgLum + 0.05)
+        let bgLum = 0.2126 * bg[0] + 0.7152 * bg[1] + 0.0722 * bg[2]
+        let fgLum = 0.2126 * fg[0] + 0.7152 * fg[1] + 0.0722 * fg[2]
+        let contrast = (bgLum > fgLum) ? (bgLum + 0.05)/(fgLum + 0.05):(fgLum + 0.05)/(bgLum + 0.05)
         
         return 1.6 < contrast
     }
@@ -85,7 +55,7 @@ extension UIImage {
     public func resize(newSize: CGSize) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
         self.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height))
-        var result = UIGraphicsGetImageFromCurrentImageContext()
+        let result = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return result
     }
@@ -122,7 +92,7 @@ extension UIImage {
         
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let raw = malloc(bytesPerRow * height)
-        let bitmapInfo = CGBitmapInfo(CGImageAlphaInfo.PremultipliedFirst.rawValue)
+        let bitmapInfo = CGImageAlphaInfo.PremultipliedFirst.rawValue
         let ctx = CGBitmapContextCreate(raw, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo)
         CGContextDrawImage(ctx, CGRectMake(0, 0, CGFloat(width), CGFloat(height)), cgImage)
         let data = UnsafePointer<UInt8>(CGBitmapContextGetData(ctx))
@@ -130,10 +100,10 @@ extension UIImage {
         let leftEdgeColors = NSCountedSet(capacity: height)
         let imageColors = NSCountedSet(capacity: width * height)
         
-        for var x = 0; x < width; x++ {
-            for var y = 0; y < height; y++ {
-                var pixel = ((width * y) + x) * bytesPerPixel
-                var color = UIColor(
+        for x in 0..<width {
+            for y in 0..<height {
+                let pixel = ((width * y) + x) * bytesPerPixel
+                let color = UIColor(
                     red: CGFloat(data[pixel+1])/255,
                     green: CGFloat(data[pixel+2])/255,
                     blue: CGFloat(data[pixel+3])/255,
@@ -153,7 +123,7 @@ extension UIImage {
         var enumerator = leftEdgeColors.objectEnumerator()
         var sortedColors = NSMutableArray(capacity: leftEdgeColors.count)
         while let kolor = enumerator.nextObject() as? UIColor {
-            var colorCount = leftEdgeColors.countForObject(kolor)
+            let colorCount = leftEdgeColors.countForObject(kolor)
             if randomColorsThreshold < colorCount  {
                 sortedColors.addObject(PCCountedColor(color: kolor, count: colorCount))
             }
@@ -168,8 +138,8 @@ extension UIImage {
         }
         
         if proposedEdgeColor.color.isBlackOrWhite && 0 < sortedColors.count {
-            for var i = 1; i < sortedColors.count; i++ {
-                var nextProposedEdgeColor = sortedColors.objectAtIndex(i) as! PCCountedColor
+            for i in 1..<sortedColors.count {
+                let nextProposedEdgeColor = sortedColors.objectAtIndex(i) as! PCCountedColor
                 if (CGFloat(nextProposedEdgeColor.count)/CGFloat(proposedEdgeColor.count)) > 0.3 {
                     if !nextProposedEdgeColor.color.isBlackOrWhite {
                         proposedEdgeColor = nextProposedEdgeColor
@@ -198,7 +168,7 @@ extension UIImage {
         sortedColors.sortUsingComparator(sortedColorComparator)
         
         for curContainer in sortedColors {
-            var kolor = (curContainer as! PCCountedColor).color
+            let kolor = (curContainer as! PCCountedColor).color
             
             if result.primaryColor == nil {
                 if kolor.isContrastingColor(result.backgroundColor) {
@@ -233,6 +203,9 @@ extension UIImage {
         if result.detailColor == nil {
             result.detailColor = isDarkBackgound ? whiteColor:blackColor
         }
+        
+        // Release the allocated memory
+        free(raw)
         
         return result
     }
