@@ -27,103 +27,9 @@ class MainViewController: UIViewController {
     
     private var lastOffset: CGFloat = 0.0 //for calculate scrollView's delta offset
     
-    @IBOutlet weak private var topView: UIVisualEffectView!
-    @IBOutlet weak private var scrollView: UIScrollView!
+    @IBOutlet weak var topView: UIVisualEffectView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
-    private func getImageFromIndex(index: Int) -> UIImage{
-        return UIImage(named: "\(index%5)")!
-    }
-    private func setupItem(){
-        view.layoutIfNeeded()
-        
-        let scrollViewHeight = scrollView.frame.height
-        let scrollViewWidth = scrollView.frame.width
-        
-        let numberOfRows = 5
-        let numberOfItemsPerRow = 3
-        
-        let itemWidth = scrollViewWidth / CGFloat(numberOfItemsPerRow)
-        let rowHeight: CGFloat = 135.0
-        
-        // setup item in scrollView
-        itemRows = []
-        var count = 0
-        for row in 0..<numberOfRows{
-            var itemRow = [MainItemView]()
-            for col in 0..<numberOfItemsPerRow{
-                let xOffset = itemWidth * CGFloat(col)
-                let yOffset = rowHeight * CGFloat(row)
-                let itemFrame = CGRect(x: xOffset, y: yOffset, width: itemWidth, height: rowHeight)
-                let item = MainItemView(frame: itemFrame)
-                item.image = artHistory.lessons[count].image
-                item.text = artHistory.lessons[count].title
-                item.action = {
-                    let localCenter = item.circleCenter
-                    self.itemCenter = self.view.convertPoint(localCenter, fromView: item)
-                    self.selectedItem = item
-                    self.performSegueWithIdentifier("showLesson", sender: nil)
-                }
-                itemRow += [item]
-                itemMap[item] = artHistory.lessons[count]
-                scrollView.addSubview(item)
-                
-                count++
-            }
-            itemRows += [ itemRow ]
-        }
-        scrollView.contentSize = CGSize(width: scrollViewWidth, height: rowHeight*5)
-        
-        // setup UIKit Dynamic
-        animator = UIDynamicAnimator(referenceView: scrollView)
-        for row in 0..<numberOfRows{
-            let currentRow = itemRows[row]
-            for col in 0..<numberOfItemsPerRow{
-                let item = currentRow[col]
-                let springBehavior = UIAttachmentBehavior(item: item, attachedToAnchor: item.center)
-                springBehavior.length = 5.0
-                springBehavior.damping = 1.0
-                springBehavior.frequency = 2.0
-                
-                //lock x coordinate
-                let xCoordinate = item.frame.origin.x
-                springBehavior.action = {
-                    item.frame.origin.x = xCoordinate
-                }
-                ////
-                animator.addBehavior(springBehavior)
-            }
-        }
-        
-    }
-    
-    private func loadJSONData(){
-        let dataPath = NSBundle.mainBundle().pathForResource("art_history_data", ofType: "json")!
-        let data = NSData(contentsOfFile: dataPath)!
-        
-        let json = JSON(data: data)
-        
-        for (index,(_,lessonJSON)) in enumerate(json["lessons"]){
-            
-            var newLesson = Lesson()
-            
-            newLesson.title = lessonJSON["title"].string!
-            newLesson.detail = lessonJSON["content"].string!
-            newLesson.image = UIImage(named: "lesson-\(index+1).png")!
-            
-            newLesson.lessonGallery = [ArtHistoryImage]()
-            for (index,(_,imageJSON)) in enumerate(lessonJSON["images"]){
-                
-                var artHistoryImage = ArtHistoryImage()
-                artHistoryImage.title = imageJSON["title"].string!
-                artHistoryImage.subtitle = imageJSON["subtitle"].string!
-                artHistoryImage.image = UIImage(named: imageJSON["name"].string!)!
-                
-                newLesson.lessonGallery! += [artHistoryImage]
-            }
-            artHistory.lessons += [newLesson]
-        }
-
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -138,7 +44,49 @@ class MainViewController: UIViewController {
         scrollView.delegate = self
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // setup items frame
+        for (row,itemRow) in itemRows.enumerate(){
+            for (col,item) in itemRow.enumerate(){
+                
+                let xOffset = itemWidth * CGFloat(col)
+                let yOffset = rowHeight * CGFloat(row)
+                
+                item.center.x = xOffset + itemWidth / 2.0
+                item.frame.origin.y = yOffset
+            }
+        }
+        
+        // setup UIKit Dynamic
+        animator = UIDynamicAnimator(referenceView: scrollView)
+        
+        let springBehaviors = itemRows.flatMap{$0}.map{ item -> UIAttachmentBehavior in
+            
+            let springBehavior = UIAttachmentBehavior(item: item, attachedToAnchor: item.center)
+            springBehavior.length = 5.0
+            springBehavior.damping = 1.0
+            springBehavior.frequency = 2.0
+            
+            //lock x coordinate
+            let xCoordinate = item.frame.origin.x
+            springBehavior.action = {
+                item.frame.origin.x = xCoordinate
+            }
+            
+            return springBehavior
+        }
+        
+        springBehaviors.forEach(animator.addBehavior)
+        
+        //
+        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: rowHeight*5)
+    }
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
         if segue.identifier == "showLesson"{
             if let lessonVC = segue.destinationViewController as? LessonViewController {
                 
@@ -152,13 +100,91 @@ class MainViewController: UIViewController {
 
     }
     
+    
+    private func getImageFromIndex(index: Int) -> UIImage{
+        return UIImage(named: "\(index%5)")!
+    }
+    
+    
+    private func setupItem(){
+        view.layoutIfNeeded()
+        
+        // create items
+        itemRows = (0..<numberOfRows).map{ _ -> [MainItemView] in
+            
+            let itemRow = (0..<numberOfItemsPerRow).map{ _ -> MainItemView in
+                
+                let itemFrame = CGRect(x: 0, y: 0, width: itemWidth, height: rowHeight)
+                let item = MainItemView(frame: itemFrame)
+                
+                return item
+            }
+            
+            return itemRow
+        }
+        
+        // setup items properties
+        itemRows.flatMap{$0}.enumerate().forEach{ index, item in
+            
+            item.image = artHistory.lessons[index].image
+            item.text = artHistory.lessons[index].title
+            
+            item.action = { [weak self] in
+                let localCenter = item.circleCenter
+                if let _self = self{
+                    _self.itemCenter = _self.view.convertPoint(localCenter, fromView: item)
+                    _self.selectedItem = item
+                    _self.performSegueWithIdentifier("showLesson", sender: nil)
+                }
+            }
+            
+            itemMap[item] = artHistory.lessons[index]
+        }
+        
+        // add all items to scrollview
+        itemRows.flatMap{$0}.forEach(scrollView.addSubview)
+    }
+    
+    private func loadJSONData(){
+        let dataPath = NSBundle.mainBundle().pathForResource("art_history_data", ofType: "json")!
+        let data = NSData(contentsOfFile: dataPath)!
+        
+        let json = JSON(data: data)
+        
+        for (index,(_,lessonJSON)) in json["lessons"].enumerate(){
+            
+            var newLesson = Lesson()
+            
+            newLesson.title = lessonJSON["title"].string!
+            newLesson.detail = lessonJSON["content"].string!
+            newLesson.image = UIImage(named: "lesson-\(index+1).png")!
+            
+            newLesson.lessonGallery = [ArtHistoryImage]()
+            
+            for (_,(_,imageJSON)) in lessonJSON["images"].enumerate(){
+                
+                var artHistoryImage = ArtHistoryImage()
+                artHistoryImage.title = imageJSON["title"].string!
+                artHistoryImage.subtitle = imageJSON["subtitle"].string!
+                artHistoryImage.image = UIImage(named: imageJSON["name"].string!)!
+                
+                newLesson.lessonGallery! += [artHistoryImage]
+            }
+            artHistory.lessons += [newLesson]
+        }
+        
+    }
+    
     //MARK: Unwind Segue
     @IBAction func unwindToMainMenu(segue:UIStoryboardSegue){
 
     }
+    
 }
+
 // MARK: UIScrollViewDelegate
 extension MainViewController: UIScrollViewDelegate{
+    
     func scrollViewDidScroll(scrollView: UIScrollView) {
 
         //update UIKit Dynamic
@@ -168,7 +194,7 @@ extension MainViewController: UIScrollViewDelegate{
             let yDistance = scrollView.contentOffset.y - spring.anchorPoint.y
             let scrollResistance = yDistance / 1500.0
             
-            let item = spring.items.first as! UIDynamicItem
+            let item = spring.items.first!
             var center = item.center
             center.y += delta
             if (delta < 0) {
@@ -183,8 +209,10 @@ extension MainViewController: UIScrollViewDelegate{
     }
     
 }
+
 // MARK: UIViewControllerTransitioningDelegate
 extension MainViewController: UIViewControllerTransitioningDelegate{
+    
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.transitionMode = .Present
         transition.startingPoint = itemCenter

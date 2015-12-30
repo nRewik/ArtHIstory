@@ -56,8 +56,6 @@ class GalleryViewController: UIViewController {
 
         
         barIndicator.backgroundColor = UIColor.flatWhiteColor()
-        
-        flatify()
     }
     
     override func viewDidLayoutSubviews() {

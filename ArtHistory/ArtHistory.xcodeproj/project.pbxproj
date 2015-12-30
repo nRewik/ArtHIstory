@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5D1AF3EDF199DB5A9E0CBA5D /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C81D055EBB8BC4F70DBDBE /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		5D1AF3EDF199DB5A9E0CBA5D /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2C81D055EBB8BC4F70DBDBE /* Pods.framework */; };
 		A00C4D231B50F3EF0037B994 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00C4D221B50F3EF0037B994 /* MainViewController.swift */; };
 		A00C4D251B50F4320037B994 /* MainItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A00C4D241B50F4320037B994 /* MainItemView.xib */; };
 		A00C4D271B50F4470037B994 /* MainItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00C4D261B50F4470037B994 /* MainItemView.swift */; };
@@ -142,6 +142,7 @@
 		A04FF4141B7F844D00371B47 /* lesson-15.png in Resources */ = {isa = PBXBuildFile; fileRef = A04FF3921B7F844D00371B47 /* lesson-15.png */; };
 		A04FF4151B7F844D00371B47 /* lesson-15.txt in Resources */ = {isa = PBXBuildFile; fileRef = A04FF3931B7F844D00371B47 /* lesson-15.txt */; };
 		A04FF4171B7F846C00371B47 /* art_history_data.json in Resources */ = {isa = PBXBuildFile; fileRef = A04FF4161B7F846C00371B47 /* art_history_data.json */; };
+		A069EFD01C33FCCE00D7A6D0 /* MainViewController+DynamicItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A069EFCF1C33FCCE00D7A6D0 /* MainViewController+DynamicItem.swift */; };
 		A0C941191B50F74E00833D17 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C941181B50F74E00833D17 /* 4.png */; };
 		A0C941231B512A9000833D17 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C9411E1B512A9000833D17 /* 3.png */; };
 		A0C941241B512A9000833D17 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C9411F1B512A9000833D17 /* 2.png */; };
@@ -309,6 +310,7 @@
 		A04FF3921B7F844D00371B47 /* lesson-15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lesson-15.png"; sourceTree = "<group>"; };
 		A04FF3931B7F844D00371B47 /* lesson-15.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "lesson-15.txt"; sourceTree = "<group>"; };
 		A04FF4161B7F846C00371B47 /* art_history_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = art_history_data.json; sourceTree = "<group>"; };
+		A069EFCF1C33FCCE00D7A6D0 /* MainViewController+DynamicItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainViewController+DynamicItem.swift"; sourceTree = "<group>"; };
 		A0C941181B50F74E00833D17 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
 		A0C9411E1B512A9000833D17 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 3.png; path = ../3.png; sourceTree = "<group>"; };
 		A0C9411F1B512A9000833D17 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 2.png; path = ../2.png; sourceTree = "<group>"; };
@@ -541,6 +543,15 @@
 			path = ArtHistory/MockResources;
 			sourceTree = "<group>";
 		};
+		A069EFCE1C33FCB300D7A6D0 /* MainViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A00C4D221B50F3EF0037B994 /* MainViewController.swift */,
+				A069EFCF1C33FCCE00D7A6D0 /* MainViewController+DynamicItem.swift */,
+			);
+			name = MainViewController;
+			sourceTree = "<group>";
+		};
 		A0C9412C1B51330E00833D17 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -581,7 +592,7 @@
 				A00C4D261B50F4470037B994 /* MainItemView.swift */,
 				A00C4D241B50F4320037B994 /* MainItemView.xib */,
 				A0C941351B52796300833D17 /* ThumbnailCollectionViewCell.swift */,
-				A00C4D221B50F3EF0037B994 /* MainViewController.swift */,
+				A069EFCE1C33FCB300D7A6D0 /* MainViewController */,
 				A0DF80561B5298A400FEAB2A /* GalleryViewController.swift */,
 				A0EF02F11B75E07500C48350 /* LessonContentTableViewCell.swift */,
 				A0EF02F31B76566600C48350 /* ThumbnailImageTableViewCell.swift */,
@@ -667,12 +678,14 @@
 		A0E03D5E1B50C747007A649F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastSwiftMigration = 0720;
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Nutchaphon Rewik";
 				TargetAttributes = {
 					A0E03D651B50C747007A649F = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = VFJYEJT57G;
+						DevelopmentTeam = Y3H8T2DZD9;
 					};
 					A0E03D7A1B50C747007A649F = {
 						CreatedOnToolsVersion = 6.4;
@@ -916,6 +929,7 @@
 				A0E03D6C1B50C747007A649F /* AppDelegate.swift in Sources */,
 				A0C941381B527C0000833D17 /* ArtHistory.swift in Sources */,
 				A0EF02F21B75E07500C48350 /* LessonContentTableViewCell.swift in Sources */,
+				A069EFD01C33FCCE00D7A6D0 /* MainViewController+DynamicItem.swift in Sources */,
 				A00C4D271B50F4470037B994 /* MainItemView.swift in Sources */,
 				A0C9412B1B5132F300833D17 /* UIImageColors.swift in Sources */,
 				A0DF80571B5298A400FEAB2A /* GalleryViewController.swift in Sources */,
@@ -983,6 +997,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -998,7 +1013,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1036,7 +1051,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -1052,12 +1067,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = ArtHistory/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "nRewik.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1071,12 +1087,13 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ArtHistory/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "nRewik.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1086,16 +1103,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ArtHistoryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "nRewik.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ArtHistory.app/ArtHistory";
 			};
@@ -1105,12 +1120,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ArtHistoryTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "nRewik.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ArtHistory.app/ArtHistory";
 			};

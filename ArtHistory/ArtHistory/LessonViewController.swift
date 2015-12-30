@@ -77,7 +77,7 @@ class LessonViewController: UIViewController {
         
     }
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return ChameleonStatusBar.statusBarStyleForColor(colorTone.backgroundColor)
+        return UIStatusBarStyleContrast
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -90,8 +90,6 @@ class LessonViewController: UIViewController {
         titleLabel.textColor = UIColor.flatBlackColor()
         
         statusBarOverlayView.backgroundColor = colorTone.backgroundColor
-
-        flatifyAndContrast()
     }
     
     @IBAction func unwindToLessonView(segue: UIStoryboardSegue){

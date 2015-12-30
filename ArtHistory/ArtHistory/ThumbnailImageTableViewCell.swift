@@ -16,7 +16,7 @@ class ThumbnailImageTableViewCell: UITableViewCell {
             
             
             // update ratio of image
-            [ratioConstraint_ImageVIew].map(thumbnailImageView.removeConstraint)
+            [ratioConstraint_ImageVIew].forEach(thumbnailImageView.removeConstraint)
             
             var ratio: CGFloat = 0.0
             if let thumbnailImage = thumbnailImage{
