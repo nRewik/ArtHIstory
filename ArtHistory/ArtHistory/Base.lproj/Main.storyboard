@@ -76,7 +76,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-                <exit id="NXO-X5-nNf" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="54" y="412"/>
         </scene>
@@ -240,59 +239,62 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qa9-1P-j0Y">
+                                    <view opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="9zY-uP-Zn4">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="i3I-fH-nah">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="History of Art" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CHI-RT-pfp" userLabel="titleLabel">
-                                                    <rect key="frame" x="60" y="107" width="245" height="23"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="18"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <size key="shadowOffset" width="1" height="1"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QSE-GC-MAB">
-                                                    <rect key="frame" x="15" y="98" width="30" height="42"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                                    <state key="normal" title="◀︎">
-                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <segue destination="NXO-X5-nNf" kind="unwind" unwindAction="unwindToMainMenu:" id="h6c-EE-RqX"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="CHI-RT-pfp" firstAttribute="centerY" secondItem="QSE-GC-MAB" secondAttribute="centerY" id="3vG-nH-xYq"/>
-                                                <constraint firstItem="QSE-GC-MAB" firstAttribute="leading" secondItem="i3I-fH-nah" secondAttribute="leading" constant="15" id="8Lw-x3-SYe"/>
-                                                <constraint firstItem="CHI-RT-pfp" firstAttribute="leading" secondItem="QSE-GC-MAB" secondAttribute="trailing" constant="15" id="Ayz-0Z-MMs"/>
-                                                <constraint firstAttribute="bottom" secondItem="CHI-RT-pfp" secondAttribute="bottom" constant="20" id="HH6-gt-IJ5"/>
-                                                <constraint firstAttribute="trailing" secondItem="CHI-RT-pfp" secondAttribute="trailing" constant="15" id="LQm-EF-P6z"/>
-                                            </constraints>
-                                        </view>
-                                        <vibrancyEffect>
-                                            <blurEffect style="extraLight"/>
-                                        </vibrancyEffect>
-                                    </visualEffectView>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n3o-nX-dGg" userLabel="Gradient View">
+                                                <rect key="frame" x="0.0" y="80" width="320" height="70"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="70" id="6uF-d2-sR2"/>
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="History of Art" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="onn-IH-lr7" userLabel="titleLabel">
+                                                <rect key="frame" x="60" y="103" width="245" height="23"/>
+                                                <fontDescription key="fontDescription" type="system" weight="black" pointSize="18"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                                <color key="shadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <size key="shadowOffset" width="1" height="1"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mnf-wU-uTE">
+                                                <rect key="frame" x="15" y="94" width="30" height="42"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <state key="normal" title="◀︎">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="n1f-to-mMk" kind="unwind" unwindAction="unwindToMainMenu:" id="xPz-Kv-NgU"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="n3o-nX-dGg" secondAttribute="trailing" id="5p2-sS-Rpp"/>
+                                            <constraint firstItem="mnf-wU-uTE" firstAttribute="leading" secondItem="9zY-uP-Zn4" secondAttribute="leading" constant="15" id="LUp-GC-gCd"/>
+                                            <constraint firstAttribute="trailing" secondItem="onn-IH-lr7" secondAttribute="trailing" constant="15" id="MMC-Hq-261"/>
+                                            <constraint firstAttribute="bottom" secondItem="n3o-nX-dGg" secondAttribute="bottom" id="MgX-mX-sUd"/>
+                                            <constraint firstItem="n3o-nX-dGg" firstAttribute="leading" secondItem="9zY-uP-Zn4" secondAttribute="leading" id="Uwx-zj-c9L"/>
+                                            <constraint firstItem="onn-IH-lr7" firstAttribute="centerY" secondItem="mnf-wU-uTE" secondAttribute="centerY" id="WoV-dT-1pk"/>
+                                            <constraint firstItem="mnf-wU-uTE" firstAttribute="centerY" secondItem="n3o-nX-dGg" secondAttribute="centerY" id="iMl-qA-Wkc"/>
+                                            <constraint firstItem="onn-IH-lr7" firstAttribute="leading" secondItem="mnf-wU-uTE" secondAttribute="trailing" constant="15" id="zDh-4U-mbC"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="9zY-uP-Zn4" firstAttribute="top" secondItem="Hze-Sb-4S9" secondAttribute="top" id="6bN-pB-vSk"/>
                                     <constraint firstItem="dSk-Sg-Yej" firstAttribute="leading" secondItem="Hze-Sb-4S9" secondAttribute="leading" id="861-VJ-yb3"/>
-                                    <constraint firstItem="Qa9-1P-j0Y" firstAttribute="top" secondItem="Hze-Sb-4S9" secondAttribute="top" id="8x3-kR-h77"/>
-                                    <constraint firstAttribute="bottom" secondItem="Qa9-1P-j0Y" secondAttribute="bottom" id="Dsr-Ig-N7K"/>
                                     <constraint firstAttribute="bottom" secondItem="gYQ-AH-5Ni" secondAttribute="bottom" id="Gwa-Fo-xvY"/>
+                                    <constraint firstAttribute="trailing" secondItem="9zY-uP-Zn4" secondAttribute="trailing" id="KrN-7f-s9m"/>
                                     <constraint firstAttribute="trailing" secondItem="gYQ-AH-5Ni" secondAttribute="trailing" id="QxI-uq-eO2"/>
                                     <constraint firstAttribute="trailing" secondItem="dSk-Sg-Yej" secondAttribute="trailing" id="TQU-Xv-r32"/>
-                                    <constraint firstItem="Qa9-1P-j0Y" firstAttribute="leading" secondItem="Hze-Sb-4S9" secondAttribute="leading" id="VKN-Ig-ldY"/>
+                                    <constraint firstAttribute="bottom" secondItem="9zY-uP-Zn4" secondAttribute="bottom" id="Y6H-zP-ruV"/>
                                     <constraint firstAttribute="bottom" secondItem="dSk-Sg-Yej" secondAttribute="bottom" id="bG1-C0-lw7"/>
                                     <constraint firstItem="gYQ-AH-5Ni" firstAttribute="leading" secondItem="Hze-Sb-4S9" secondAttribute="leading" id="d3A-qd-aj2"/>
                                     <constraint firstItem="gYQ-AH-5Ni" firstAttribute="top" secondItem="Hze-Sb-4S9" secondAttribute="top" id="dYZ-BH-w97"/>
+                                    <constraint firstItem="9zY-uP-Zn4" firstAttribute="leading" secondItem="Hze-Sb-4S9" secondAttribute="leading" id="fH4-fl-ui9"/>
                                     <constraint firstAttribute="height" constant="150" id="nxx-Wl-yj8"/>
-                                    <constraint firstAttribute="trailing" secondItem="Qa9-1P-j0Y" secondAttribute="trailing" id="r9b-xw-m5I"/>
                                     <constraint firstItem="dSk-Sg-Yej" firstAttribute="top" secondItem="Hze-Sb-4S9" secondAttribute="top" id="ypz-OG-kFN"/>
                                 </constraints>
                             </view>
@@ -319,13 +321,14 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="backButton" destination="QSE-GC-MAB" id="u69-Qz-yju"/>
+                        <outlet property="backButton" destination="mnf-wU-uTE" id="7Q5-pG-vy3"/>
+                        <outlet property="gradientView" destination="n3o-nX-dGg" id="J4G-mu-kIS"/>
                         <outlet property="headImageView" destination="gYQ-AH-5Ni" id="cCE-Tl-eEF"/>
                         <outlet property="headView" destination="Hze-Sb-4S9" id="3bO-g0-V44"/>
                         <outlet property="heightConstraint_headView" destination="nxx-Wl-yj8" id="D0q-NM-DB9"/>
                         <outlet property="statusBarOverlayView" destination="U86-Py-bTR" id="U34-dK-2OV"/>
                         <outlet property="tableView" destination="PYa-1d-e0Y" id="XHy-og-gym"/>
-                        <outlet property="titleLabel" destination="CHI-RT-pfp" id="OM5-ip-EDO"/>
+                        <outlet property="titleLabel" destination="onn-IH-lr7" id="Css-fK-Kp1"/>
                         <outlet property="topSpace_headViewConstraint" destination="QMO-na-tdi" id="4rN-nZ-Z9F"/>
                     </connections>
                 </viewController>

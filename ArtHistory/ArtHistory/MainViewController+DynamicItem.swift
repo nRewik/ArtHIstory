@@ -19,11 +19,11 @@ extension MainViewController{
     }
     
     var numberOfRows: Int{
-        return 5
+        return 3
     }
     
     var rowHeight: CGFloat{
-        return 135.0
+        return 150.0
     }
     
     

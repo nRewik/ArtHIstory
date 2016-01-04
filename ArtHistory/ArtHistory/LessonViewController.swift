@@ -30,7 +30,7 @@ class LessonViewController: UIViewController {
     }
     
     var minimumTopViewHeight: CGFloat{
-        return 67.5
+        return 70.0
     }
     var maximumTopViewHeight: CGFloat{
         return 150.0
@@ -45,6 +45,7 @@ class LessonViewController: UIViewController {
     @IBOutlet weak var headImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var gradientView: UIView!
     
     @IBOutlet weak var tableView: UITableView!
 
@@ -72,28 +73,39 @@ class LessonViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        adjustTitleLabelFontSize()
-        view.layoutIfNeeded()
+        setStatusBarStyle(UIStatusBarStyleContrast)
         
-    }
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyleContrast
+        view.layoutIfNeeded()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        backButton.setTitleColor(UIColor.flatBlackColor(), forState: .Normal)
-        backButton.setTitleColor(UIColor.flatWhiteColor(), forState: .Highlighted)
-        backButton.setTitleColor(UIColor.flatWhiteColor(), forState: .Selected)
+        let titleColor = UIColor(contrastingBlackOrWhiteColorOn: colorTone.backgroundColor, isFlat: true)
+        let complementTitleColor = UIColor(complementaryFlatColorOf: titleColor)
+        
+        backButton.setTitleColor(titleColor, forState: .Normal)
+        backButton.setTitleColor(complementTitleColor, forState: .Highlighted)
+        backButton.setTitleColor(complementTitleColor, forState: .Selected)
 
-        titleLabel.textColor = UIColor.flatBlackColor()
+        titleLabel.textColor = titleColor
         
         statusBarOverlayView.backgroundColor = colorTone.backgroundColor
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        updateGradientColor()
+    }
+    
     @IBAction func unwindToLessonView(segue: UIStoryboardSegue){
         
+    }
+    
+    func updateGradientColor(){
+        let gradientColor = colorTone.backgroundColor
+        gradientView.backgroundColor = UIColor(gradientStyle: .TopToBottom, withFrame: gradientView.frame, andColors: [ gradientColor.colorWithAlphaComponent(0.0),gradientColor])
     }
 
 }
@@ -234,11 +246,6 @@ extension LessonViewController: UITableViewDelegate{
         
         heightConstraint_headView.constant = newHeight
         //println("\(newHeight)")
-
-        //calculate new fontsize after adjust headview
-        if newHeight < maximumTopViewHeight - 5{
-            adjustTitleLabelFontSize()
-        }
         
         
         //hide topbar when scroll far than lesson content
@@ -250,16 +257,7 @@ extension LessonViewController: UITableViewDelegate{
             topSpace_headViewConstraint.constant = 0
         }
         
-        
-        
         view.layoutIfNeeded()
-        
-    }
-    func adjustTitleLabelFontSize(){
-        var titleRect = titleLabel.frame
-        titleRect.size.width -= 5
-        titleRect.size.height = headView.frame.height - 40
-        titleLabel.adjustFontSizeToFitRect(titleRect)
     }
     
 }
