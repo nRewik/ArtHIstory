@@ -16,8 +16,6 @@ extension UILabel{
             return
         }
         
-        frame = rect
-        
         let maxFontSize: CGFloat = 100.0
         let minFontSize: CGFloat = 5.0
         
@@ -26,26 +24,32 @@ extension UILabel{
         
         let constraintSize = CGSize(width: rect.width, height: CGFloat.max)
         
-        while(p <= q){
+        let tmpLabel = UILabel(frame: rect)
+        tmpLabel.font = font
+        
+        while(p < q){
             let currentSize = (p + q) / 2
-            font = font.fontWithSize( CGFloat(currentSize) )
-            let text = NSAttributedString(string: self.text!, attributes: [NSFontAttributeName:font])
+            tmpLabel.font = tmpLabel.font.fontWithSize( CGFloat(currentSize) )
+            let text = NSAttributedString(string: self.text!, attributes: [NSFontAttributeName:tmpLabel.font])
             let textRect = text.boundingRectWithSize(constraintSize, options: .UsesLineFragmentOrigin, context: nil)
             
             let labelSize = textRect.size
             
-            if labelSize.height < frame.height &&
-                labelSize.height >= frame.height-10 &&
-                labelSize.width < frame.width &&
-                labelSize.width >= frame.width-10 {
+            if  labelSize.height < tmpLabel.frame.height &&
+                labelSize.height >= tmpLabel.frame.height-10 &&
+                labelSize.width < tmpLabel.frame.width &&
+                labelSize.width >= tmpLabel.frame.width-10
+            {
+                print("in break")
                 break
-            }else if labelSize.height > frame.height || labelSize.width > frame.width{
+            }else if labelSize.height > tmpLabel.frame.height || labelSize.width > tmpLabel.frame.width{
                 q = currentSize - 1
             }else{
                 p = currentSize + 1
             }
         }
-        
+
+        font = tmpLabel.font
     }
 }
 

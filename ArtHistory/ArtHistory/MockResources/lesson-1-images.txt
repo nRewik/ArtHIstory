@@ -1,16 +1,47 @@
 lesson-1-1.png
-Rustic Rubber Pants
-Debitis autem expedita architecto omnis quam. Consequatur facilis est nesciunt et inventore minus esse laboriosam. Expedita dolor quia laborum consectetur id.
+Bison, c.15,000-10,000 B.C.
+null
 
 lesson-1-2.png
-Fantastic Metal Chicken
-Nesciunt tempora ipsum corporis harum fuga voluptatum. Tempora et sit quidem necessitatibus. Cupiditate perspiciatis illo saepe qui expedita.
+Horse, c.15,000-10,000 B.C.
+null
 
 lesson-1-3.png
-Incredible Rubber Pants
-Et architecto dolores. Unde quis deleniti molestiae tempora. Earum alias et dicta ut voluptates cumque molestias qui.
+Cave at Lascaux, France, c.15,000-10,000 B.C.
+null
 
 lesson-1-4.png
-Incredible Concrete Pants
-Voluptatem ea dicta qui quia exercitationem harum. Aliquid omnis ut voluptate ipsam fugiat. Non recusandae molestiae.
+Altamira Caves, Northern Spain
+จิตรกรรมถ้ำอัลตามิรา ในภาคเหนือของประเทศสเปน เป็นการบันทึกประสบการณ์และความเชื่อทางไสยศาสตร์ เป็นวิธีเดียวในการเขียนตำราและการสร้างงานศิลปะ
 
+lesson-1-5.png
+Hall of Bulls, left wall, Lascaux, c 15000-13000 B.C., France.
+ภาพวัวกระทิง แสดงมิติด้วยเส้นและน้ำหนักของสี ทำให้รู้สึกถึงมวลของลำตัววัวกระทิง
+
+lesson-1-6.png
+Three Cows and One Horse, ceiling, Lascaux, c 15000-13000 B.C., France.
+ภาพวัวและม้า บนเพดานถ้ำลาสโกซ์ แสดงให้เห็นถึงความเข้าใจในกายวิภาค ผสมกับการแสดงออกให้รู้สึกต่างๆ อาทิความเร็ว ความดุร้าย ความอ่อนโยนฯ
+
+lesson-1-7.png
+Spotted Horses and Negative Hand, Pech-Merle, c 15000-13000 B.C., France.
+ภาพม้าลายจุดและมือ
+
+lesson-1-8.png
+Well Scene, Lascaux, c 1500-13000 B.C., France.
+รูปมนุษย์มักเป็นรูปทรงง่ายๆ มีส่วนลำตัวและแขนขา ศิลปินมักวาดรูปสัตว์ถูกแทงด้วยศรหรือหอก สันนิษฐานว่าเป็นการประกอบพิธีกรรม เพื่อให้เกิดความมั่นใจในการออกล่าสัตว์
+
+lesson-1-9.png
+Marching Warriors, Gassulla gorge, c 8000-3000 B.C., Spain.
+ภาพขบวนนักรบ พบที่ประเทศสเปน ขนาดภาพมีความกว้างประมาณ 9 นิ้ว เขียนเป็นแท่งๆ ทึบๆ ไม่มีรายละเอียด
+
+lesson-1-10.png
+Relief Horse, Cap Blanc, c 13,000-11,000 B.C., France.
+รูปม้านูนต่ำ ยาวประมาณ 7 ฟุต พบที่ประเทศฝรั่งเศส
+
+lesson-1-11.png
+Venus of Willendorf, c 25000-20000 B.C., Naturhistorisches Museum, Vienna.
+เทพีแห่งความสมบูรณ์ ประติมากรรมสตรีขนาดเล็ก สูงประมาณ 4 3/8 นิ้ว ลักษณะเป็นรูปสตรีอ้วนท้วนสมบูรณ์ น่าจะหมายถึงการเพิ่มพูนความอุดมสมบูรณ์ให้กับเผ่า
+
+lesson-1-12.png
+Stonehenge, c 2000 B.C., England.
+สถาปัตยกรรม ในยุคหินใหม่ เป็นวงหินเครื่องมือทางดาราศาสตร์ ทำให้รู้ฤดูกาล
