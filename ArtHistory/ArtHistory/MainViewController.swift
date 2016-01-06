@@ -27,6 +27,9 @@ class MainViewController: UIViewController {
     
     private var lastOffset: CGFloat = 0.0 //for calculate scrollView's delta offset
     
+    
+    let gameItemView = UIView()
+    
     @IBOutlet weak var topView: UIVisualEffectView!
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -42,6 +45,9 @@ class MainViewController: UIViewController {
         scrollView.setContentOffset( CGPoint(x: 0.0, y: -scrollView.contentInset.top), animated: false)
         lastOffset = scrollView.contentOffset.y
         scrollView.delegate = self
+        
+        //
+        scrollView.addSubview(gameItemView)
     }
     
     override func viewDidLayoutSubviews() {
@@ -51,11 +57,14 @@ class MainViewController: UIViewController {
         for (row,itemRow) in itemRows.enumerate(){
             for (col,item) in itemRow.enumerate(){
                 
+                let itemHeight = (scrollView.frame.height - topView.frame.height) / CGFloat(numberOfRows)
+                
                 let xOffset = itemWidth * CGFloat(col)
-                let yOffset = rowHeight * CGFloat(row)
+                let yOffset = itemHeight * CGFloat(row)
                 
                 item.center.x = xOffset + itemWidth / 2.0
                 item.frame.origin.y = yOffset
+                item.frame.size.height = itemHeight
             }
         }
         
@@ -80,8 +89,18 @@ class MainViewController: UIViewController {
         
         springBehaviors.forEach(animator.addBehavior)
         
+        // game items
+        gameItemView.backgroundColor = UIColor.flatRedColor()
+        
+        gameItemView.frame.size = CGSize(width: 100, height: 100)
+        gameItemView.layer.cornerRadius = gameItemView.frame.width / 2.0
+        
+        gameItemView.center.x = scrollView.frame.width / 2.0
+        
+        gameItemView.frame.origin.y = 1.5 * scrollView.frame.height - gameItemView.frame.height / 2.0 + scrollView.contentInset.top / 2.0 - 20.0
+        
         //
-        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: rowHeight*5)
+        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: scrollView.frame.height * 2 )
     }
     
     
@@ -206,6 +225,11 @@ extension MainViewController: UIScrollViewDelegate{
             animator.updateItemUsingCurrentState(item)
         }
         lastOffset = scrollView.contentOffset.y
+        
+        
+        let unclampedT = ( scrollView.contentOffset.y + scrollView.contentInset.top ) / scrollView.frame.height
+        let t = min(max(unclampedT,0),1)
+        print(t)
     }
     
 }
