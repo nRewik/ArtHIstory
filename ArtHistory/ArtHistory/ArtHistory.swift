@@ -18,7 +18,11 @@ struct Lesson {
     
     var title = "Title"
     var detail = "detail..."
-    var image: UIImage?
+    var imageName: String?
+    var image: UIImage?{
+        guard let imageName = imageName else { return nil }
+        return UIImage(named: imageName)
+    }
     
     var lessonGallery: [ArtHistoryImage]?
     
@@ -30,9 +34,13 @@ struct Lesson {
 
 struct ArtHistoryImage{
     
-    var image: UIImage?
     var title = "Title"
     var subtitle = "Subtitle"
     
+    var imageName: String?
+    var image: UIImage?{
+        guard let imageName = imageName else { return nil }
+        return UIImage(named: imageName)
+    }
 }
 
