@@ -17,17 +17,8 @@ class LessonViewController: UIViewController {
     
     var colorTone: UIImageColors!
 
-    var lessonContentHeight: CGFloat{
-        
-        let titleAttributedString = NSAttributedString(string: lesson.detail, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue-Thin", size: 18)!])
-        
-        
-        let constraintedSize = CGSize(width: tableView.frame.width-30, height: 9999.0)
-        
-        let titleHeight = titleAttributedString.boundingRectWithSize(constraintedSize, options: .UsesLineFragmentOrigin, context: nil).height
-        
-        return 20 + titleHeight + 20
-    }
+    /// Need update manually for performance reason
+    var lessonContentHeight: CGFloat = 0.0
     
     var minimumTopViewHeight: CGFloat{
         return 70.0
@@ -96,16 +87,26 @@ class LessonViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        updateGradientColor()
-    }
-    
-    @IBAction func unwindToLessonView(segue: UIStoryboardSegue){
+        // Update lessonContentHeight
+        lessonContentHeight = {
+            
+            let titleAttributedString = NSAttributedString(string: lesson.detail, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue-Thin", size: 18)!])
+            let constraintedSize = CGSize(width: tableView.frame.width-30, height: 9999.0)
+            let titleHeight = titleAttributedString.boundingRectWithSize(constraintedSize, options: .UsesLineFragmentOrigin, context: nil).height
+            
+            return 20 + titleHeight + 20
+        }()
         
+        updateGradientColor()
     }
     
     func updateGradientColor(){
         let gradientColor = colorTone.backgroundColor
         gradientView.backgroundColor = UIColor(gradientStyle: .TopToBottom, withFrame: gradientView.frame, andColors: [ gradientColor.colorWithAlphaComponent(0.0),gradientColor])
+    }
+    
+    @IBAction func unwindToLessonView(segue: UIStoryboardSegue){
+        
     }
 
 }
@@ -221,7 +222,6 @@ extension LessonViewController: UITableViewDelegate{
     
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
         if indexPath.section == 1{
             let thumbnailImageCellHeight = heightForThumbnailImageCellForRow(indexPath.row)
             return thumbnailImageCellHeight
@@ -256,8 +256,6 @@ extension LessonViewController: UITableViewDelegate{
         }else{
             topSpace_headViewConstraint.constant = 0
         }
-        
-        view.layoutIfNeeded()
     }
     
 }
