@@ -1,7 +1,7 @@
 PODS:
   - BubbleTransition (1.0.1)
-  - ChameleonFramework/Default (2.0.6)
-  - ChameleonFramework/Swift (2.0.6):
+  - ChameleonFramework/Default (2.1.0)
+  - ChameleonFramework/Swift (2.1.0):
     - ChameleonFramework/Default
   - FontAwesome.swift (0.7.0)
   - SwiftyJSON (2.3.2)
@@ -14,7 +14,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   BubbleTransition: 76d5e306dbda0f622260ea7d082c971d976422ab
-  ChameleonFramework: a6b466873ff9a4ce3a5196c20bccf1a97ad9f446
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
   FontAwesome.swift: c6e30a1a81716306ff9c81f2d38dda88ac5b8294
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 

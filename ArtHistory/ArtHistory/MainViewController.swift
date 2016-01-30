@@ -29,6 +29,9 @@ class MainViewController: UIViewController {
     
     
     let gameItemView = UIView()
+    let gameMenu1 = UIButton()
+    let gameMenu2 = UIButton()
+    let gameMenu3 = UIButton()
     
     @IBOutlet weak var topView: UIVisualEffectView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -46,8 +49,15 @@ class MainViewController: UIViewController {
         lastOffset = scrollView.contentOffset.y
         scrollView.delegate = self
         
+        // game menu
+        gameMenu1.setTitle("Lesson 1", forState: .Normal)
+        gameMenu1.backgroundColor = UIColor.flatMagentaColor()
+        gameMenu1.showsTouchWhenHighlighted = true
+        gameMenu1.addTarget(self, action: "goToGame:", forControlEvents: .TouchUpInside)
+        
         //
         scrollView.addSubview(gameItemView)
+        [gameMenu1,gameMenu2,gameMenu3].forEach(scrollView.addSubview)
     }
     
     override func viewDidLayoutSubviews() {
@@ -98,6 +108,17 @@ class MainViewController: UIViewController {
         gameItemView.center.x = scrollView.frame.width / 2.0
         
         gameItemView.frame.origin.y = 1.5 * scrollView.frame.height - gameItemView.frame.height / 2.0 + scrollView.contentInset.top / 2.0 - 20.0
+        
+        
+        
+        // game menu 1
+        let margin: CGFloat = 50
+        
+        gameMenu1.frame.size = CGSize(width: 85.0, height: 85.0)
+        
+        gameMenu1.layer.cornerRadius = gameMenu1.frame.width / 2.0
+        gameMenu1.center.x = scrollView.frame.width / 2.0
+        gameMenu1.frame.origin.y = gameItemView.frame.origin.y - ( gameMenu1.frame.height + margin )
         
         //
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: scrollView.frame.height * 2 )
@@ -176,7 +197,7 @@ class MainViewController: UIViewController {
             
             newLesson.title = lessonJSON["title"].string!
             newLesson.detail = lessonJSON["content"].string!
-            newLesson.image = UIImage(named: "lesson-\(index+1).png")!
+            newLesson.imageName = "lesson-\(index+1).png"
             
             newLesson.lessonGallery = [ArtHistoryImage]()
             
@@ -185,11 +206,26 @@ class MainViewController: UIViewController {
                 var artHistoryImage = ArtHistoryImage()
                 artHistoryImage.title = imageJSON["title"].string!
                 artHistoryImage.subtitle = imageJSON["subtitle"].string!
-                artHistoryImage.image = UIImage(named: imageJSON["name"].string!)!
+                artHistoryImage.imageName = imageJSON["name"].string!
                 
                 newLesson.lessonGallery! += [artHistoryImage]
             }
             artHistory.lessons += [newLesson]
+        }
+        
+    }
+    
+    func goToGame(button: UIButton){
+        
+        switch button{
+        case gameMenu1:
+            print("game menu 1")
+        case gameMenu2:
+            break
+        case gameMenu3:
+            break
+        default:
+            break
         }
         
     }
