@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChoiceView" customModule="ArtHistory" customModuleProvider="target">
+            <connections>
+                <outlet property="choiceButton" destination="oIt-4R-oRb" id="Mo5-wt-0rG"/>
+                <outlet property="numberLabel" destination="egk-ZK-FRR" id="W1V-q4-vaQ"/>
+                <outlet property="numberView" destination="2Lw-Td-0kb" id="Amo-o8-yoN"/>
+                <outlet property="overlayWhiteView" destination="ekU-VU-Kk0" id="MHG-Ze-Nay"/>
+                <outlet property="resultLabel" destination="vRO-bH-j1l" id="F15-rP-zow"/>
+                <outlet property="resultView" destination="MAv-tf-lXA" id="F1f-6X-z2R"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="593" height="185"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Lw-Td-0kb" userLabel="Number View">
+                    <rect key="frame" x="0.0" y="0.0" width="593" height="185"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egk-ZK-FRR" userLabel="Number Label">
+                            <rect key="frame" x="288" y="75" width="17" height="36"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="30"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="egk-ZK-FRR" firstAttribute="centerX" secondItem="2Lw-Td-0kb" secondAttribute="centerX" id="Mh5-v6-czK"/>
+                        <constraint firstItem="egk-ZK-FRR" firstAttribute="centerY" secondItem="2Lw-Td-0kb" secondAttribute="centerY" id="zOz-Gi-tEQ"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oIt-4R-oRb" userLabel="Choice Button">
+                    <rect key="frame" x="0.0" y="0.0" width="593" height="185"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <action selector="choiceButtonDidTouch:" destination="-1" eventType="touchUpInside" id="jL7-BU-VRG"/>
+                    </connections>
+                </button>
+                <view userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ekU-VU-Kk0" userLabel="Overlay White View">
+                    <rect key="frame" x="0.0" y="0.0" width="593" height="185"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MAv-tf-lXA" userLabel="Result View">
+                    <rect key="frame" x="0.0" y="0.0" width="593" height="185"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="✓" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vRO-bH-j1l" userLabel="Result Label">
+                            <rect key="frame" x="268" y="57" width="57" height="72"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="60"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="vRO-bH-j1l" firstAttribute="centerY" secondItem="MAv-tf-lXA" secondAttribute="centerY" id="OL4-eM-x9C"/>
+                        <constraint firstItem="vRO-bH-j1l" firstAttribute="centerX" secondItem="MAv-tf-lXA" secondAttribute="centerX" id="oVv-yT-3ps"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="oIt-4R-oRb" secondAttribute="bottom" id="2Dl-Wx-Eur"/>
+                <constraint firstItem="oIt-4R-oRb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="5mF-Wp-Z6g"/>
+                <constraint firstItem="2Lw-Td-0kb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="7Vu-w8-bpS"/>
+                <constraint firstItem="ekU-VU-Kk0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Jjm-rK-5gm"/>
+                <constraint firstItem="MAv-tf-lXA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="VjM-ns-YEr"/>
+                <constraint firstItem="MAv-tf-lXA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="XmX-Oh-KmF"/>
+                <constraint firstAttribute="trailing" secondItem="2Lw-Td-0kb" secondAttribute="trailing" id="ZHb-xw-sPJ"/>
+                <constraint firstAttribute="trailing" secondItem="ekU-VU-Kk0" secondAttribute="trailing" id="a53-ON-Qyl"/>
+                <constraint firstAttribute="trailing" secondItem="MAv-tf-lXA" secondAttribute="trailing" id="d3b-QK-4cO"/>
+                <constraint firstItem="ekU-VU-Kk0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="fe6-Hn-XAf"/>
+                <constraint firstAttribute="bottom" secondItem="ekU-VU-Kk0" secondAttribute="bottom" id="iT9-wO-iRW"/>
+                <constraint firstAttribute="trailing" secondItem="oIt-4R-oRb" secondAttribute="trailing" id="lbd-hX-qbd"/>
+                <constraint firstItem="oIt-4R-oRb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="oLo-n1-Iip"/>
+                <constraint firstItem="2Lw-Td-0kb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="u7J-Ig-AMO"/>
+                <constraint firstAttribute="bottom" secondItem="MAv-tf-lXA" secondAttribute="bottom" id="wBc-j0-ivm"/>
+                <constraint firstAttribute="bottom" secondItem="2Lw-Td-0kb" secondAttribute="bottom" id="zqy-GC-EXC"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="318.5" y="264.5"/>
+        </view>
+    </objects>
+</document>
