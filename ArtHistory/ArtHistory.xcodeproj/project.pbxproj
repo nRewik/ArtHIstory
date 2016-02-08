@@ -11,6 +11,8 @@
 		A00C4D231B50F3EF0037B994 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00C4D221B50F3EF0037B994 /* MainViewController.swift */; };
 		A00C4D251B50F4320037B994 /* MainItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A00C4D241B50F4320037B994 /* MainItemView.xib */; };
 		A00C4D271B50F4470037B994 /* MainItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00C4D261B50F4470037B994 /* MainItemView.swift */; };
+		A01CD0A81C67703B00A98259 /* ChoiceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A01CD0A71C67703B00A98259 /* ChoiceView.xib */; };
+		A01CD0AA1C67705100A98259 /* ChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01CD0A91C67705100A98259 /* ChoiceView.swift */; };
 		A04FF4171B7F846C00371B47 /* art_history_data.json in Resources */ = {isa = PBXBuildFile; fileRef = A04FF4161B7F846C00371B47 /* art_history_data.json */; };
 		A069EFD01C33FCCE00D7A6D0 /* MainViewController+MenuItemConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A069EFCF1C33FCCE00D7A6D0 /* MainViewController+MenuItemConfig.swift */; };
 		A07942241C3A8762000ADEFC /* lesson-1-1.png in Resources */ = {isa = PBXBuildFile; fileRef = A07940861C3A8760000ADEFC /* lesson-1-1.png */; };
@@ -561,6 +563,8 @@
 		A00C4D221B50F3EF0037B994 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		A00C4D241B50F4320037B994 /* MainItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainItemView.xib; sourceTree = "<group>"; };
 		A00C4D261B50F4470037B994 /* MainItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainItemView.swift; sourceTree = "<group>"; };
+		A01CD0A71C67703B00A98259 /* ChoiceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChoiceView.xib; sourceTree = "<group>"; };
+		A01CD0A91C67705100A98259 /* ChoiceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoiceView.swift; sourceTree = "<group>"; };
 		A04FF4161B7F846C00371B47 /* art_history_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = art_history_data.json; sourceTree = "<group>"; };
 		A069EFCF1C33FCCE00D7A6D0 /* MainViewController+MenuItemConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainViewController+MenuItemConfig.swift"; sourceTree = "<group>"; };
 		A07940861C3A8760000ADEFC /* lesson-1-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lesson-1-1.png"; sourceTree = "<group>"; };
@@ -1165,6 +1169,24 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		A01CD0A61C67701100A98259 /* MainItemView */ = {
+			isa = PBXGroup;
+			children = (
+				A00C4D261B50F4470037B994 /* MainItemView.swift */,
+				A00C4D241B50F4320037B994 /* MainItemView.xib */,
+			);
+			name = MainItemView;
+			sourceTree = "<group>";
+		};
+		A01CD0AB1C67705500A98259 /* ChoiceView */ = {
+			isa = PBXGroup;
+			children = (
+				A01CD0A91C67705100A98259 /* ChoiceView.swift */,
+				A01CD0A71C67703B00A98259 /* ChoiceView.xib */,
+			);
+			name = ChoiceView;
+			sourceTree = "<group>";
+		};
 		A04FF3111B7F842F00371B47 /* MockResources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1754,8 +1776,8 @@
 		A0A8B1461C5B9018001E52AF /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A00C4D261B50F4470037B994 /* MainItemView.swift */,
-				A00C4D241B50F4320037B994 /* MainItemView.xib */,
+				A01CD0AB1C67705500A98259 /* ChoiceView */,
+				A01CD0A61C67701100A98259 /* MainItemView */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2328,6 +2350,7 @@
 				A07942641C3A8762000ADEFC /* lesson-3-16.png in Resources */,
 				A07942291C3A8762000ADEFC /* lesson-1-6.png in Resources */,
 				A07943191C3A8762000ADEFC /* lesson-7-24.png in Resources */,
+				A01CD0A81C67703B00A98259 /* ChoiceView.xib in Resources */,
 				A07942DA1C3A8762000ADEFC /* lesson-5-26.png in Resources */,
 				A079425A1C3A8762000ADEFC /* lesson-3-6.png in Resources */,
 				A07943091C3A8762000ADEFC /* lesson-7-14.png in Resources */,
@@ -2509,6 +2532,7 @@
 			files = (
 				A00C4D231B50F3EF0037B994 /* MainViewController.swift in Sources */,
 				A0EF02F41B76566600C48350 /* ThumbnailImageTableViewCell.swift in Sources */,
+				A01CD0AA1C67705100A98259 /* ChoiceView.swift in Sources */,
 				A0E03D6C1B50C747007A649F /* AppDelegate.swift in Sources */,
 				A0A8B1411C5B8F52001E52AF /* GameViewController.swift in Sources */,
 				A0C941381B527C0000833D17 /* ArtHistory.swift in Sources */,
