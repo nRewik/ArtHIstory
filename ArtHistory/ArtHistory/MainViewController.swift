@@ -21,12 +21,14 @@ class MainViewController: UIViewController {
     
     private var itemCenter: CGPoint!
     private var selectedItem: MainItemView!
+    private var transitionBubbleColor: UIColor?
     
     private var itemRows: [ [MainItemView] ] = []
     private var animator: UIDynamicAnimator!
     
     private var lastOffset: CGFloat = 0.0 //for calculate scrollView's delta offset
     
+    private var selectedGameIndex = 0
     
     let gameItemView = UIView()
     let gameMenu1 = UIButton()
@@ -128,16 +130,21 @@ class MainViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if segue.identifier == "showLesson"{
-            if let lessonVC = segue.destinationViewController as? LessonViewController {
+            let lessonVC = segue.destinationViewController as! LessonViewController
                 
-                lessonVC.transitioningDelegate = self
-                lessonVC.modalPresentationStyle = .Custom
-                
-                lessonVC.colorTone = selectedItem.image?.getColors(CGSize(width: 25, height: 25))
-                lessonVC.lesson = itemMap[selectedItem]!
-            }
+            lessonVC.transitioningDelegate = self
+            lessonVC.modalPresentationStyle = .Custom
+            
+            lessonVC.colorTone = selectedItem.image?.getColors(CGSize(width: 25, height: 25))
+            lessonVC.lesson = itemMap[selectedItem]!
         }
-
+        
+        if segue.identifier == "showGame"{
+            let gameVC = segue.destinationViewController as! GameViewController
+            gameVC.game = Game.randomGameFromLesson(selectedGameIndex)
+            gameVC.transitioningDelegate = self
+            gameVC.modalPresentationStyle = .Custom
+        }
     }
     
     
@@ -174,6 +181,7 @@ class MainViewController: UIViewController {
                 if let _self = self{
                     _self.itemCenter = _self.view.convertPoint(localCenter, fromView: item)
                     _self.selectedItem = item
+                    _self.transitionBubbleColor = _self.selectedItem.image?.getColors(CGSize(width: 25, height: 25)).backgroundColor
                     _self.performSegueWithIdentifier("showLesson", sender: nil)
                 }
             }
@@ -216,18 +224,12 @@ class MainViewController: UIViewController {
     }
     
     func goToGame(button: UIButton){
+        let map: [UIButton:Int] = [gameMenu1:1, gameMenu2:2, gameMenu3:3]
         
-        switch button{
-        case gameMenu1:
-            print("game menu 1")
-        case gameMenu2:
-            break
-        case gameMenu3:
-            break
-        default:
-            break
-        }
-        
+        selectedGameIndex = map[button]!
+        itemCenter = view.convertPoint(button.center, fromView: scrollView)
+        transitionBubbleColor = button.backgroundColor
+        performSegueWithIdentifier("showGame", sender: self)
     }
     
     //MARK: Unwind Segue
@@ -276,14 +278,14 @@ extension MainViewController: UIViewControllerTransitioningDelegate{
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.transitionMode = .Present
         transition.startingPoint = itemCenter
-        transition.bubbleColor = selectedItem.image?.getColors(CGSize(width: 25, height: 25)).backgroundColor ?? UIColor.flatWhiteColor()
+        transition.bubbleColor = transitionBubbleColor ?? UIColor.flatWhiteColor()
         return transition
     }
     
     func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.transitionMode = .Dismiss
         transition.startingPoint = itemCenter
-        transition.bubbleColor = selectedItem.image?.getColors(CGSize(width: 25, height: 25)).backgroundColor ?? UIColor.flatWhiteColor()
+        transition.bubbleColor = transitionBubbleColor ?? UIColor.flatWhiteColor()
         return transition
     }
 }

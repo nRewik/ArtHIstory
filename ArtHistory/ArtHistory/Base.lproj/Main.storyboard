@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qLP-BA-2Wr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -76,6 +76,7 @@
                         <outlet property="scrollView" destination="xmV-H3-bwt" id="x34-9e-YUh"/>
                         <outlet property="topView" destination="BLt-9w-cVF" id="lQ5-2t-3kt"/>
                         <segue destination="Uai-xh-czc" kind="presentation" identifier="showLesson" id="KRz-MT-qke"/>
+                        <segue destination="qLP-BA-2Wr" kind="presentation" identifier="showGame" id="zlN-dF-deW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -103,7 +104,6 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="75" id="4OB-na-1v8"/>
                                         </constraints>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
@@ -115,7 +115,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="backButtonDidTouch" destination="qLP-BA-2Wr" eventType="touchUpInside" id="pwD-AI-D3j"/>
+                                            <segue destination="bIH-qw-TB8" kind="unwind" unwindAction="unwindToMainMenu:" id="NLo-pQ-j1o"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -129,7 +129,7 @@
                                     <constraint firstItem="IsQ-2Y-Oqo" firstAttribute="leading" secondItem="R6M-d3-pVc" secondAttribute="leading" constant="10" id="yaD-RA-fSA"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o3A-YZ-idz" userLabel="Choices View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o3A-YZ-idz" userLabel="Choice View Container">
                                 <rect key="frame" x="0.0" y="118" width="375" height="549"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5ef-VS-i8N">
@@ -229,7 +229,7 @@
                                             <color key="titleColor" red="0.11181893199682236" green="0.1118365004658699" blue="0.1118125319480896" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="backButtonDidTouch" destination="qLP-BA-2Wr" eventType="touchUpInside" id="Jat-rq-0IT"/>
+                                            <segue destination="bIH-qw-TB8" kind="unwind" unwindAction="unwindToMainMenu:" id="EMN-sf-7XR"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2bD-hy-pcF" userLabel="Max Score Label">
@@ -317,8 +317,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hHw-R7-wtg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="bIH-qw-TB8" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="66.5" y="-283.5"/>
+            <point key="canvasLocation" x="66.5" y="1252.5"/>
         </scene>
         <!--Lesson View Controller-->
         <scene sceneID="KZn-KK-t3p">

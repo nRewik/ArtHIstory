@@ -77,7 +77,7 @@ class GameViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        startAnimateCurrentQuestion()
+        NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "startAnimateCurrentQuestion", userInfo: nil, repeats: false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -187,11 +187,5 @@ class GameViewController: UIViewController {
     func animateClearChoiceImages(){
         choiceOutlets.forEach{ $0.setShowState(.Clear, animated: true) }
     }
-    
-    // IBActions    
-    @IBAction func backButtonDidTouch() {
-        
-    }
-    
     
 }
