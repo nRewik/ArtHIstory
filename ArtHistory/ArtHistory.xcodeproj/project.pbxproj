@@ -14,6 +14,7 @@
 		A01CD0A81C67703B00A98259 /* ChoiceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A01CD0A71C67703B00A98259 /* ChoiceView.xib */; };
 		A01CD0AA1C67705100A98259 /* ChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01CD0A91C67705100A98259 /* ChoiceView.swift */; };
 		A04FF4171B7F846C00371B47 /* art_history_data.json in Resources */ = {isa = PBXBuildFile; fileRef = A04FF4161B7F846C00371B47 /* art_history_data.json */; };
+		A0523DF21C6F28CB007493F6 /* GameViewController+ChoiceViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0523DF11C6F28CB007493F6 /* GameViewController+ChoiceViewDelegate.swift */; };
 		A069EFD01C33FCCE00D7A6D0 /* MainViewController+MenuItemConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A069EFCF1C33FCCE00D7A6D0 /* MainViewController+MenuItemConfig.swift */; };
 		A07942241C3A8762000ADEFC /* lesson-1-1.png in Resources */ = {isa = PBXBuildFile; fileRef = A07940861C3A8760000ADEFC /* lesson-1-1.png */; };
 		A07942251C3A8762000ADEFC /* lesson-1-2.png in Resources */ = {isa = PBXBuildFile; fileRef = A07940871C3A8760000ADEFC /* lesson-1-2.png */; };
@@ -566,6 +567,7 @@
 		A01CD0A71C67703B00A98259 /* ChoiceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChoiceView.xib; sourceTree = "<group>"; };
 		A01CD0A91C67705100A98259 /* ChoiceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoiceView.swift; sourceTree = "<group>"; };
 		A04FF4161B7F846C00371B47 /* art_history_data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = art_history_data.json; sourceTree = "<group>"; };
+		A0523DF11C6F28CB007493F6 /* GameViewController+ChoiceViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GameViewController+ChoiceViewDelegate.swift"; sourceTree = "<group>"; };
 		A069EFCF1C33FCCE00D7A6D0 /* MainViewController+MenuItemConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MainViewController+MenuItemConfig.swift"; sourceTree = "<group>"; };
 		A07940861C3A8760000ADEFC /* lesson-1-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lesson-1-1.png"; sourceTree = "<group>"; };
 		A07940871C3A8760000ADEFC /* lesson-1-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lesson-1-2.png"; sourceTree = "<group>"; };
@@ -1750,6 +1752,7 @@
 			isa = PBXGroup;
 			children = (
 				A0A8B1401C5B8F52001E52AF /* GameViewController.swift */,
+				A0523DF11C6F28CB007493F6 /* GameViewController+ChoiceViewDelegate.swift */,
 			);
 			name = GameViewController;
 			sourceTree = "<group>";
@@ -2537,6 +2540,7 @@
 				A0A8B1411C5B8F52001E52AF /* GameViewController.swift in Sources */,
 				A0C941381B527C0000833D17 /* ArtHistory.swift in Sources */,
 				A0EF02F21B75E07500C48350 /* LessonContentTableViewCell.swift in Sources */,
+				A0523DF21C6F28CB007493F6 /* GameViewController+ChoiceViewDelegate.swift in Sources */,
 				A069EFD01C33FCCE00D7A6D0 /* MainViewController+MenuItemConfig.swift in Sources */,
 				A0A8B1481C5B9065001E52AF /* Game.swift in Sources */,
 				A00C4D271B50F4470037B994 /* MainItemView.swift in Sources */,
