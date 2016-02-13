@@ -7,6 +7,13 @@
 //
 
 import UIKit
+import FontAwesome_swift
+import ChameleonFramework
+
+protocol ChoiceViewDelegate: class{
+    func choiceView(choiceView: ChoiceView, willChangeShowState state: ChoiceViewShowState)
+    func choiceView(choiceView: ChoiceView, didChangeShowState state: ChoiceViewShowState)
+}
 
 enum ChoiceViewShowState: String{
     case Show,Reveal,Clear
@@ -20,6 +27,19 @@ enum ChoiceViewShowState: String{
             choiceButton.setImage(image, forState: .Normal)
         }
     }
+    
+    @IBInspectable var isCorrectAnswer: Bool = false{
+        didSet{
+            if isCorrectAnswer{
+                resultLabel?.textColor = UIColor.flatLimeColor()
+                resultLabel?.text = String.fontAwesomeIconWithName(FontAwesome.Check)
+            }else{
+                resultLabel?.textColor = UIColor.flatWatermelonColor()
+                resultLabel?.text = String.fontAwesomeIconWithName(FontAwesome.Close)
+            }
+        }
+    }
+    
     @IBInspectable var titleText: String?{
         didSet{
             numberLabel.text = titleText
@@ -33,6 +53,8 @@ enum ChoiceViewShowState: String{
             }
         }
     }
+    
+    weak var delegate: ChoiceViewDelegate?
     
     private var choiceViewState = ChoiceViewShowState.Clear
     
@@ -75,6 +97,8 @@ enum ChoiceViewShowState: String{
     // Method
     func setShowState(state: ChoiceViewShowState, animated: Bool){
         
+        delegate?.choiceView(self, willChangeShowState: state)
+        
         if animated{
             
             switch state{
@@ -86,10 +110,13 @@ enum ChoiceViewShowState: String{
                 resultViewMask.transform = CGAffineTransformMakeScale(0.001, 0.001)
                 choiceButtonMask.transform = CGAffineTransformMakeScale(0.001, 0.001)
                 
-                UIView.animateWithDuration(1.0){
+                UIView.animateWithDuration(1.0,
+                animations: {
                     self.choiceButtonMask.transform = CGAffineTransformIdentity
-                }
-                
+                },
+                completion: { finish in
+                    self.delegate?.choiceView(self, didChangeShowState: state)
+                })
                 
             case .Reveal:
                 
@@ -97,10 +124,14 @@ enum ChoiceViewShowState: String{
                 revealImageViewMask.transform = CGAffineTransformMakeScale(0.001, 0.001)
                 resultViewMask.transform = CGAffineTransformMakeScale(0.001, 0.001)
                 
-                UIView.animateWithDuration(1.0){
+                UIView.animateWithDuration(1.0,
+                animations: {
                     self.revealImageViewMask.transform = CGAffineTransformIdentity
                     self.resultViewMask.transform = CGAffineTransformIdentity
-                }
+                },
+                completion: { finish in
+                    self.delegate?.choiceView(self, didChangeShowState: state)
+                })
                 
             case .Clear:
                 
@@ -109,9 +140,13 @@ enum ChoiceViewShowState: String{
                     
                 view.bringSubviewToFront(numberView)
                 
-                UIView.animateWithDuration(1.0){
+                UIView.animateWithDuration(1.0,
+                animations: {
                     self.numberMask.transform = CGAffineTransformIdentity
-                }
+                },
+                completion: { finish in
+                    self.delegate?.choiceView(self, didChangeShowState: state)
+                })
             }
             
         }else{
@@ -139,6 +174,8 @@ enum ChoiceViewShowState: String{
                 numberMask.transform = CGAffineTransformIdentity
                 view.bringSubviewToFront(numberView)
             }
+            
+            delegate?.choiceView(self, didChangeShowState: state)
         }
     }
     
@@ -163,6 +200,8 @@ enum ChoiceViewShowState: String{
         addSubview(view)
         
         //// set up view here
+        resultLabel.font = UIFont.fontAwesomeOfSize(60.0)
+        
         allMaskViews.forEach{
             $0.backgroundColor = UIColor.blackColor()
             $0.clipsToBounds = true
@@ -171,14 +210,10 @@ enum ChoiceViewShowState: String{
         choiceButton.imageView?.contentMode = .ScaleAspectFill
         choiceButton.imageView?.clipsToBounds = true
         
-        
         choiceButton.maskView = choiceButtonMask
         resultView.maskView = resultViewMask
         numberView.maskView = numberMask
         overlayWhiteView.maskView = revealImageViewMask
-        
-//        revealImageViewMask.transform = CGAffineTransformMakeScale(0.001, 0.001)
-//        resultViewMask.transform = CGAffineTransformMakeScale(0.001, 0.001)
         
         setShowState(.Clear, animated: false)
     }
