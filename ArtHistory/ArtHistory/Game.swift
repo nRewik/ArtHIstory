@@ -47,7 +47,7 @@ struct Game{
         
         let questions = zip(questionPairs, otherImagesPath).map{ GameQuestion(title: $0.title, correctImagePath: $0.image, otherImagePaths: $1) }
         
-        return Game(questions: questions)
+        return Game(questions: questions.shuffle())
     }
 }
 
