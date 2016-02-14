@@ -243,7 +243,13 @@ class MainViewController: UIViewController {
                 
                 var artHistoryImage = ArtHistoryImage()
                 artHistoryImage.title = imageJSON["title"].string!
-                artHistoryImage.subtitle = imageJSON["subtitle"].string!
+                
+                if imageJSON["subtitle"].stringValue.lowercaseString == "null"{
+                    artHistoryImage.subtitle = ""
+                }else{
+                    artHistoryImage.subtitle = imageJSON["subtitle"].stringValue
+                }
+                
                 artHistoryImage.imageName = imageJSON["name"].string!
                 
                 newLesson.lessonGallery! += [artHistoryImage]
