@@ -24,6 +24,9 @@ import UIKit
         didSet{
             button.imageView?.contentMode = .ScaleAspectFill
             button.setImage(image, forState: .Normal)
+            button.layer.borderWidth = 2.0
+            button.layer.borderColor = image?.getColors(CGSize(width: 25, height: 25)).backgroundColor.lightenByPercentage(0.25).colorWithAlphaComponent(0.5).CGColor
+            layoutIfNeeded()
         }
     }
     
@@ -37,10 +40,7 @@ import UIKit
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutIfNeeded()
-        
         button.layer.cornerRadius = button.frame.width / 2.0
-        button.clipsToBounds = true
     }
     
     // MARK: Custom View Initilization
