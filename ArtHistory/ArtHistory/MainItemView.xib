@@ -20,7 +20,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lDs-wC-Ivs" userLabel="topView">
                     <rect key="frame" x="0.0" y="0.0" width="213" height="165"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbs-a1-Whk" userLabel="button">
+                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbs-a1-Whk" userLabel="button">
                             <rect key="frame" x="24" y="0.0" width="165" height="165"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="zbs-a1-Whk" secondAttribute="height" multiplier="1:1" id="pZ2-TG-jG4"/>
@@ -62,7 +62,7 @@
                         </mask>
                     </variation>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vec-KT-Un8" userLabel="label">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vec-KT-Un8" userLabel="label">
                     <rect key="frame" x="15" y="165" width="183" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="KD2-Ti-qcd"/>

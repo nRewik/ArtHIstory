@@ -30,13 +30,14 @@ class MainViewController: UIViewController {
     
     private var selectedGameIndex = 0
     
-    let gameItemView = UIView()
+    let gameItemView = UIButton()
     let gameMenu1 = UIButton()
     let gameMenu2 = UIButton()
     let gameMenu3 = UIButton()
     
     @IBOutlet weak var topView: UIVisualEffectView!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var moreView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,10 +53,26 @@ class MainViewController: UIViewController {
         scrollView.delegate = self
         
         // game menu
+        gameItemView.setTitle("Quiz", forState: .Normal)
+        
         gameMenu1.setTitle("Lesson 1", forState: .Normal)
         gameMenu1.backgroundColor = UIColor.flatMagentaColor()
-        gameMenu1.showsTouchWhenHighlighted = true
-        gameMenu1.addTarget(self, action: "goToGame:", forControlEvents: .TouchUpInside)
+        
+        gameMenu2.setTitle("Lesson 2", forState: .Normal)
+        gameMenu2.backgroundColor = UIColor.flatWatermelonColor()
+        
+        gameMenu3.setTitle("Lesson 3", forState: .Normal)
+        gameMenu3.backgroundColor = UIColor.flatTealColor()
+        
+        [gameMenu1,gameMenu2,gameMenu3].forEach{
+            $0.showsTouchWhenHighlighted = true
+            $0.layer.borderWidth = 2.0
+            $0.layer.borderColor = $0.backgroundColor!.lightenByPercentage(0.25).CGColor
+            $0.addTarget(self, action: "goToGame:", forControlEvents: .TouchUpInside)
+        }
+        
+        //
+        moreView.translatesAutoresizingMaskIntoConstraints = false
         
         //
         scrollView.addSubview(gameItemView)
@@ -69,7 +86,7 @@ class MainViewController: UIViewController {
         for (row,itemRow) in itemRows.enumerate(){
             for (col,item) in itemRow.enumerate(){
                 
-                let itemHeight = (scrollView.frame.height - topView.frame.height) / CGFloat(numberOfRows)
+                let itemHeight = (scrollView.frame.height - topView.frame.height - moreView.frame.height) / CGFloat(numberOfRows)
                 
                 let xOffset = itemWidth * CGFloat(col)
                 let yOffset = itemHeight * CGFloat(row)
@@ -113,14 +130,27 @@ class MainViewController: UIViewController {
         
         
         
-        // game menu 1
-        let margin: CGFloat = 50
+        // Game menu
+        let margin: CGFloat = 10
+        [gameMenu1,gameMenu2,gameMenu3].forEach{
+            $0.frame.size = CGSize(width: 100.0, height: 100.0)
+            $0.layer.cornerRadius = $0.frame.width / 2.0
+        }
         
-        gameMenu1.frame.size = CGSize(width: 85.0, height: 85.0)
-        
-        gameMenu1.layer.cornerRadius = gameMenu1.frame.width / 2.0
+        // Game menu 1
         gameMenu1.center.x = scrollView.frame.width / 2.0
-        gameMenu1.frame.origin.y = gameItemView.frame.origin.y - ( gameMenu1.frame.height + margin )
+        gameMenu1.frame.origin.y = gameItemView.frame.origin.y - ( gameMenu1.frame.height + 30 )
+        
+        // Game menu 2
+        gameMenu2.center.x = scrollView.frame.width / 2.0 - 85
+        gameMenu2.frame.origin.y = gameItemView.frame.origin.y + ( gameMenu1.frame.height + margin )
+        
+        // Game menu 3
+        gameMenu3.center.x = scrollView.frame.width / 2.0 + 85
+        gameMenu3.frame.origin.y = gameItemView.frame.origin.y + ( gameMenu1.frame.height + margin )
+        
+        //
+        moreView.frame.size = CGSize(width: view.frame.width, height: 20.0)
         
         //
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: scrollView.frame.height * 2 )
@@ -267,7 +297,13 @@ extension MainViewController: UIScrollViewDelegate{
         
         let unclampedT = ( scrollView.contentOffset.y + scrollView.contentInset.top ) / scrollView.frame.height
         let t = min(max(unclampedT,0),1)
-        print(t)
+        // print(t)
+        
+        moreView.alpha = (1-t) * 1 + t * 0
+        
+        let moreViewBaseYoffset = view.frame.height - moreView.frame.height
+        let moreViewYoffset = (1-t) * 0 + t * -moreView.frame.height
+        moreView.frame.origin.y = moreViewBaseYoffset - moreViewYoffset
     }
     
 }
