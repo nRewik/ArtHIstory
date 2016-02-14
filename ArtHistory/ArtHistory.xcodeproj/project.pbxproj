@@ -540,6 +540,7 @@
 		A0C9412E1B51379800833D17 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = A0C9412D1B51379800833D17 /* FontAwesome.otf */; };
 		A0C941301B51777800833D17 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C9412F1B51777800833D17 /* UILabel.swift */; };
 		A0C941381B527C0000833D17 /* ArtHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0C941371B527C0000833D17 /* ArtHistory.swift */; };
+		A0D1BD8C1C70A2FB006A18E2 /* CollectionType+Shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D1BD8B1C70A2FB006A18E2 /* CollectionType+Shuffle.swift */; };
 		A0E03D6C1B50C747007A649F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0E03D6B1B50C747007A649F /* AppDelegate.swift */; };
 		A0E03D711B50C747007A649F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0E03D6F1B50C747007A649F /* Main.storyboard */; };
 		A0E03D731B50C747007A649F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0E03D721B50C747007A649F /* Images.xcassets */; };
@@ -1093,6 +1094,7 @@
 		A0C9412D1B51379800833D17 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
 		A0C9412F1B51777800833D17 /* UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
 		A0C941371B527C0000833D17 /* ArtHistory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArtHistory.swift; sourceTree = "<group>"; };
+		A0D1BD8B1C70A2FB006A18E2 /* CollectionType+Shuffle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionType+Shuffle.swift"; sourceTree = "<group>"; };
 		A0E03D661B50C747007A649F /* ArtHistory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtHistory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E03D6A1B50C747007A649F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0E03D6B1B50C747007A649F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1790,6 +1792,7 @@
 			children = (
 				A0C9412A1B5132F300833D17 /* UIImageColors.swift */,
 				A0C9412F1B51777800833D17 /* UILabel.swift */,
+				A0D1BD8B1C70A2FB006A18E2 /* CollectionType+Shuffle.swift */,
 			);
 			name = Extension;
 			path = ArtHistory;
@@ -2536,6 +2539,7 @@
 				A00C4D231B50F3EF0037B994 /* MainViewController.swift in Sources */,
 				A0EF02F41B76566600C48350 /* ThumbnailImageTableViewCell.swift in Sources */,
 				A01CD0AA1C67705100A98259 /* ChoiceView.swift in Sources */,
+				A0D1BD8C1C70A2FB006A18E2 /* CollectionType+Shuffle.swift in Sources */,
 				A0E03D6C1B50C747007A649F /* AppDelegate.swift in Sources */,
 				A0A8B1411C5B8F52001E52AF /* GameViewController.swift in Sources */,
 				A0C941381B527C0000833D17 /* ArtHistory.swift in Sources */,
