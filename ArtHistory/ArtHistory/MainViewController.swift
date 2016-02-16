@@ -244,7 +244,7 @@ class MainViewController: UIViewController {
                 var artHistoryImage = ArtHistoryImage()
                 artHistoryImage.title = imageJSON["title"].string!
                 
-                if imageJSON["subtitle"].stringValue.lowercaseString == "null"{
+                if imageJSON["subtitle"].stringValue.lowercaseString.containsString("null"){
                     artHistoryImage.subtitle = ""
                 }else{
                     artHistoryImage.subtitle = imageJSON["subtitle"].stringValue
