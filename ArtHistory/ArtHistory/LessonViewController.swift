@@ -12,10 +12,18 @@ import ChameleonFramework
 import BubbleTransition
 
 class LessonViewController: UIViewController {
-    
+  
+    // Init
     var lesson: Lesson!
-    
+//    var lesson = Lesson.getAllLessons()[0]
     var colorTone: UIImageColors!
+  
+    // States
+    var topHeadViewOrigin: CGFloat?
+  var topHeadHeightOrigin: CGFloat?
+    var readOriginFrame: CGRect?
+    var readImageViewOriginFrame: CGRect?
+    var readIndexPath: NSIndexPath?
 
     /// Need update manually for performance reason
     var lessonContentHeight: CGFloat = 0.0
@@ -37,7 +45,19 @@ class LessonViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var gradientView: UIView!
-    
+  
+  @IBOutlet weak var statusBarDimView: UIView!
+  @IBOutlet weak var dimView: UIView!
+  @IBOutlet weak var readView: UIView!
+  @IBOutlet weak var readViewTopConstraint: NSLayoutConstraint!
+  @IBOutlet weak var readViewBottomConstraint: NSLayoutConstraint!
+  @IBOutlet weak var readviewLeadingConstraint: NSLayoutConstraint!
+  @IBOutlet weak var readViewTralingConstraint: NSLayoutConstraint!
+  
+  @IBOutlet weak var readImageView: UIImageView!
+  @IBOutlet weak var readImageViewTopConstraint: NSLayoutConstraint!
+  @IBOutlet weak var readImageViewHeightConstraint: NSLayoutConstraint!
+  
     @IBOutlet weak var tableView: UITableView!
 
     func setupInset(){
@@ -53,17 +73,21 @@ class LessonViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+//        lesson.detail = String(lesson.detail.characters.prefix(250))
+      
         setupInset()
         setupShadow()
         backButton.titleLabel?.font = UIFont.fontAwesomeOfSize(35.0)
         backButton.setTitle(String.fontAwesomeIconWithName(.ChevronCircleLeft), forState: .Normal)
-        
+      
+        readView.layer.cornerRadius = 6.0
+      
         headImageView.image = lesson.image
         titleLabel.text = lesson.title
         
         tableView.dataSource = self
         tableView.delegate = self
-        
+      
         setStatusBarStyle(UIStatusBarStyleContrast)
         
         view.layoutIfNeeded()
@@ -71,7 +95,9 @@ class LessonViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+      
+//      return
+      
         let titleColor = UIColor(contrastingBlackOrWhiteColorOn: colorTone.backgroundColor, isFlat: true)
         let complementTitleColor = UIColor(complementaryFlatColorOf: titleColor)
         
@@ -86,7 +112,9 @@ class LessonViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+      
+//      return
+      
         // Update lessonContentHeight
         lessonContentHeight = {
             
@@ -97,14 +125,59 @@ class LessonViewController: UIViewController {
             return 20 + titleHeight + 20
         }()
         
-        updateGradientColor()
+       updateGradientColor()
     }
     
     func updateGradientColor(){
         let gradientColor = colorTone.backgroundColor
         gradientView.backgroundColor = UIColor(gradientStyle: .TopToBottom, withFrame: gradientView.frame, andColors: [ gradientColor.colorWithAlphaComponent(0.0),gradientColor])
     }
+  
+  
+  @IBAction func readCloseButtonDidTouch() {
     
+    guard let readOriginFrame = readOriginFrame else { return }
+    guard let readImageViewOriginFrame = readImageViewOriginFrame else { return }
+    
+    readViewTopConstraint.constant = readOriginFrame.origin.y
+    readViewBottomConstraint.constant = view.bounds.height - (readOriginFrame.origin.y + readOriginFrame.height)
+    readviewLeadingConstraint.constant = readOriginFrame.origin.x
+    readViewTralingConstraint.constant = view.bounds.width - (readOriginFrame.origin.x + readOriginFrame.width)
+    
+    readImageViewTopConstraint.constant = readImageViewOriginFrame.origin.y
+    readImageViewHeightConstraint.constant = readImageViewOriginFrame.height
+    
+    if let topHeadViewOrigin = topHeadViewOrigin{
+      topSpace_headViewConstraint.constant = topHeadViewOrigin
+    }
+    if let topHeadHeightOrigin = topHeadHeightOrigin{
+      heightConstraint_headView.constant = topHeadHeightOrigin
+    }
+    
+    setStatusBarStyle(UIStatusBarStyleContrast)
+    
+    UIView.animateWithDuration(0.5,
+    animations: {
+      self.dimView.alpha = 0.0
+      self.statusBarDimView.alpha = 0.0
+      self.readView.alpha = 1.0
+      self.view.layoutIfNeeded()
+    },
+    completion: { finish in
+      if let readIndexPath = self.readIndexPath{
+        let cell = self.tableView.cellForRowAtIndexPath(readIndexPath)!
+        cell.hidden = false
+      }
+      
+      self.readView.alpha = 0.0
+      self.readOriginFrame = nil
+      self.readImageViewOriginFrame = nil
+      self.readIndexPath = nil
+      self.topHeadViewOrigin = nil
+      self.topHeadHeightOrigin = nil
+    })
+  }
+  
     @IBAction func unwindToLessonView(segue: UIStoryboardSegue){
         
     }
@@ -123,34 +196,32 @@ extension LessonViewController: UITableViewDataSource{
         case 0:
             return 1
         case 1:
-            return lesson.lessonGallery?.count ?? 0
+            return lesson.lessonGallery.count
         default:
             return 0
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        
+      
         if indexPath.section == 0{
             let contentCell = tableView.dequeueReusableCellWithIdentifier("LessonContentTableViewCell") as! LessonContentTableViewCell
-            
             contentCell.contentText = lesson.detail
-            
             return contentCell
         }
         
         if indexPath.section == 1{
-            
-            if let thumbnailImageCell = tableView.dequeueReusableCellWithIdentifier("ThumbnailImageTableViewCell") as? ThumbnailImageTableViewCell, lessonGallery = lesson.lessonGallery{
-                
-                thumbnailImageCell.thumbnailImage = lessonGallery[indexPath.row].image
-                thumbnailImageCell.title = lessonGallery[indexPath.row].title
-                thumbnailImageCell.subtitle = lessonGallery[indexPath.row].subtitle
-                
+            if let thumbnailImageCell = tableView.dequeueReusableCellWithIdentifier("ThumbnailImageTableViewCell") as? ThumbnailImageTableViewCell
+            {
+                thumbnailImageCell.thumbnailImage = lesson.lessonGallery[indexPath.row].image
+                thumbnailImageCell.title = lesson.lessonGallery[indexPath.row].title
+                thumbnailImageCell.subtitle = lesson.lessonGallery[indexPath.row].subtitle
+              
                 return thumbnailImageCell
             }
         }
+      
+        assertionFailure("should return all possible UITableViewCells")
         return UITableViewCell()
     }
     
@@ -158,79 +229,60 @@ extension LessonViewController: UITableViewDataSource{
 
 //MARK: TableView Delegate
 extension LessonViewController: UITableViewDelegate{
-    
-    //MARK: calculate table height
-    private func thumbnailImageTitleHeightForRow(row: Int) -> CGFloat{
+  
+  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    tableView.deselectRowAtIndexPath(indexPath, animated: false)
+    if indexPath.section == 1{
+      readImageView.image = lesson.lessonGallery[indexPath.row].image
+      
+      let cell = tableView.cellForRowAtIndexPath(indexPath) as! ThumbnailImageTableViewCell
+      let convertedRect = cell.convertRect(cell.bounds, toView: view)
+      let imageViewConvertedRect = cell.thumbnailImageView.convertRect(cell.thumbnailImageView.bounds, toView: cell)
+      
+      readOriginFrame = convertedRect
+      readImageViewOriginFrame = imageViewConvertedRect
+      readIndexPath = indexPath
+      
+      cell.hidden = true
+      
+      readViewTopConstraint.constant = convertedRect.origin.y
+      readViewBottomConstraint.constant = view.bounds.height - (convertedRect.origin.y + convertedRect.height)
+      readviewLeadingConstraint.constant = convertedRect.origin.x
+      readViewTralingConstraint.constant = view.bounds.width - (convertedRect.origin.x + convertedRect.width)
+      
+      readImageViewTopConstraint.constant = imageViewConvertedRect.origin.y
+      readImageViewHeightConstraint.constant = imageViewConvertedRect.height
+      
+      view.layoutIfNeeded()
+      
+      [readViewBottomConstraint,readviewLeadingConstraint,readViewTralingConstraint].forEach{ $0.constant = 15.0 }
+      readViewTopConstraint.constant = 30.0
+      readImageViewTopConstraint.constant = 45.0
+      readImageViewHeightConstraint.constant = 200.0
+      
+      topHeadViewOrigin = topSpace_headViewConstraint.constant
+      topSpace_headViewConstraint.constant = -minimumTopViewHeight
+      
+      topHeadHeightOrigin = heightConstraint_headView.constant
+      heightConstraint_headView.constant = minimumTopViewHeight
         
-        if lesson.lessonGallery == nil{
-            return 0
-        }
-        let artHistoryImage = lesson.lessonGallery![row]
-        
-        let titleAttributedString = NSAttributedString(string: artHistoryImage.title, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue-Medium", size: 22)!])
-        
-        
-        let constraintedSize = CGSize(width: tableView.frame.width-20, height: 9999.0)
-        
-        let titleHeight = titleAttributedString.boundingRectWithSize(constraintedSize, options: .UsesLineFragmentOrigin, context: nil).height
-
-        return titleHeight
+      readView.alpha = 1.0
+      setStatusBarStyle(.LightContent)
+      UIView.animateWithDuration(0.5){
+        self.view.layoutIfNeeded()
+        self.dimView.alpha = 0.9
+        self.statusBarDimView.alpha = 0.9
+        self.readView.alpha = 1.0
+      }
     }
-    private func thumbnailImageSubtitleHeightForRow(row: Int) -> CGFloat{
-        
-        if lesson.lessonGallery == nil{
-            return 0
-        }
-        let artHistoryImage = lesson.lessonGallery![row]
-        
-        let titleAttributedString = NSAttributedString(string: artHistoryImage.subtitle, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue-Light", size: 17)!])
-        
-        let constraintedSize = CGSize(width: tableView.frame.width-30, height: 9999.0)
-        
-        let titleHeight = titleAttributedString.boundingRectWithSize(constraintedSize, options: .UsesLineFragmentOrigin, context: nil).height
-        
-        return titleHeight
-    }
-    private func thumbnailImageHeightForRow(row: Int) -> CGFloat{
-        
-        if lesson.lessonGallery == nil || lesson.lessonGallery![row].image == nil{
-            return 0
-        }
-        
-        let image = lesson.lessonGallery![row].image!
-        
-        // guard divide by zero
-        if image.size.height - 0.0 < 0.001{
-            return 0
-        }
-        
-        let ratio = image.size.width / image.size.height
-        return tableView.frame.width / ratio
-    }
-    
-    
-    private func heightForThumbnailImageCellForRow(row :Int) -> CGFloat{
-        
-        let titleHeight = thumbnailImageTitleHeightForRow(row)
-        let imageHeight = thumbnailImageHeightForRow(row)
-        let subtitleHeight = thumbnailImageSubtitleHeightForRow(row)
-        
-        let totalHeight = 10 + titleHeight + 10 + imageHeight + 10 + subtitleHeight + 10 + 15
-        
-        return totalHeight
-    }
-    
-    
+  }
+  
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 1{
             let thumbnailImageCellHeight = heightForThumbnailImageCellForRow(indexPath.row)
             return thumbnailImageCellHeight
         }
         return lessonContentHeight
-    }
-
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        return nil
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -257,5 +309,10 @@ extension LessonViewController: UITableViewDelegate{
             topSpace_headViewConstraint.constant = 0
         }
     }
+  
+  func scrollViewShouldScrollToTop(scrollView: UIScrollView) -> Bool {
+    guard scrollView === tableView else { return true }
+    return readIndexPath === nil
+  }
     
 }
