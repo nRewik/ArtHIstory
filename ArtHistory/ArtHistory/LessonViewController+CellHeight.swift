@@ -25,7 +25,7 @@ extension LessonViewController{
     let constraintedSize = CGSize(width: tableView.frame.width-30, height: 9999.0)
     let titleHeight = titleAttributedString.boundingRectWithSize(constraintedSize, options: .UsesLineFragmentOrigin, context: nil).height
     
-    return titleHeight
+    return min(titleHeight,105)
   }
   
   func thumbnailImageHeightForRow(row: Int) -> CGFloat{
