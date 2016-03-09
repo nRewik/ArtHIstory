@@ -39,7 +39,7 @@ class GameViewController: UIViewController {
   @IBOutlet weak var choice4Button: UIButton!
   @IBOutlet var choiceButtons: [UIButton]!
   @IBOutlet var choiceImageViews: [UIImageView]!
-  
+  @IBOutlet var resultImageViews: [UIImageView]!
   
   @IBOutlet weak var titleTextView: UITextView!
   
@@ -159,18 +159,19 @@ class GameViewController: UIViewController {
     let otherIndices = indices.filter{ $0 != randomIndex}
     
     choiceImageViews[correctIndex].image = UIImage(named: question.correctImagePath)
+    resultImageViews[correctIndex].image = UIImage(named: "right")
     correctAnswerIndex = correctIndex
     
     let otherChoiceButtons = otherIndices.map{ choiceImageViews[$0] }
-    
     zip(otherChoiceButtons, question.otherImagePaths).forEach{ choiceImageView, imagePath in
       choiceImageView.image = UIImage(named: imagePath)
     }
     
+    let otherResultImageViews = otherIndices.map{ resultImageViews[$0] }
+    otherResultImageViews.forEach{ $0.image = UIImage(named: "wrong") }
   }
   
   func startAnimateCurrentQuestion(){
-    canAnswerQuestion = false
     animateTypeWriter(currentQuestion.title, currentCursorIndex: 0, textView: titleTextView, interval: 0.025)
   }
   
@@ -199,6 +200,7 @@ class GameViewController: UIViewController {
   }
   
   func showNextQuestion(){
+    resultImageViews.forEach{ $0.alpha = 0.0 }
     choiceImageViews.forEach{ $0.alpha = 1.0 }
     prepareChoiceViewForQuestion(currentQuestion)
     startAnimateCurrentQuestion()
@@ -207,6 +209,8 @@ class GameViewController: UIViewController {
   
   @IBAction func choiceButtonDidTouch(sender: UIButton, forEvent event: UIEvent) {
     guard let answerIndex = choiceButtonMap[sender] else { return }
+    
+    canAnswerQuestion = false
     
     answerResults += [answerIndex == correctAnswerIndex]
     animateRevealSubProgressAtIndex(questionIndex)
@@ -221,6 +225,7 @@ class GameViewController: UIViewController {
       UIView.animateWithDuration(0.6,
       animations: {
         self.choiceImageViews[answerIndex].alpha = 0.4
+        self.resultImageViews[answerIndex].alpha = 1.0
       },
       completion: { finish in
         NSTimer.scheduledTimerWithTimeInterval(0.6, target: self, selector: "showNextQuestion", userInfo: nil, repeats: false)
