@@ -29,7 +29,6 @@ class MainViewController: UIViewController {
   
   private var selectedGameIndex = 0
   
-  let gameItemView = UIButton()
   let gameMenu1 = UIButton()
   let gameMenu2 = UIButton()
   let gameMenu3 = UIButton()
@@ -52,8 +51,6 @@ class MainViewController: UIViewController {
     scrollView.delegate = self
     
     // game menu
-    gameItemView.setTitle("Quiz", forState: .Normal)
-    
     gameMenu1.setTitle("Lesson 1", forState: .Normal)
     gameMenu1.backgroundColor = UIColor.flatMagentaColor()
     
@@ -74,7 +71,6 @@ class MainViewController: UIViewController {
     moreView.translatesAutoresizingMaskIntoConstraints = false
     
     //
-    scrollView.addSubview(gameItemView)
     [gameMenu1,gameMenu2,gameMenu3].forEach(scrollView.addSubview)
   }
   
@@ -117,36 +113,26 @@ class MainViewController: UIViewController {
     
     springBehaviors.forEach(animator.addBehavior)
     
-    // game items
-    gameItemView.backgroundColor = UIColor.flatRedColor()
-    
-    gameItemView.frame.size = CGSize(width: 100, height: 100)
-    gameItemView.layer.cornerRadius = gameItemView.frame.width / 2.0
-    
-    gameItemView.center.x = scrollView.frame.width / 2.0
-    
-    gameItemView.frame.origin.y = 1.5 * scrollView.frame.height - gameItemView.frame.height / 2.0 + scrollView.contentInset.top / 2.0 - 20.0
-    
-    
-    
     // Game menu
-    let margin: CGFloat = 10
+    let centerY = 1.5 * scrollView.frame.height + scrollView.contentInset.top / 2.0 - 20.0 + 25
+    let margin: CGFloat = 20
     [gameMenu1,gameMenu2,gameMenu3].forEach{
-      $0.frame.size = CGSize(width: 100.0, height: 100.0)
+      $0.frame.size = CGSize(width: 65.0, height: 65.0)
+      $0.titleLabel?.font = $0.titleLabel?.font.fontWithSize(13)
       $0.layer.cornerRadius = $0.frame.width / 2.0
     }
     
-    // Game menu 1
-    gameMenu1.center.x = scrollView.frame.width / 2.0
-    gameMenu1.frame.origin.y = gameItemView.frame.origin.y - ( gameMenu1.frame.height + 30 )
-    
     // Game menu 2
-    gameMenu2.center.x = scrollView.frame.width / 2.0 - 85
-    gameMenu2.frame.origin.y = gameItemView.frame.origin.y + ( gameMenu1.frame.height + margin )
+    gameMenu2.frame.origin.x = 25
+    gameMenu2.frame.origin.y = centerY - gameMenu2.frame.height / 2
+    
+    // Game menu 1
+    gameMenu1.frame.origin.x = 25
+    gameMenu1.frame.origin.y = gameMenu2.frame.origin.y - gameMenu1.frame.height - margin
     
     // Game menu 3
-    gameMenu3.center.x = scrollView.frame.width / 2.0 + 85
-    gameMenu3.frame.origin.y = gameItemView.frame.origin.y + ( gameMenu1.frame.height + margin )
+    gameMenu3.frame.origin.x = 25
+    gameMenu3.frame.origin.y = gameMenu2.frame.origin.y + gameMenu3.frame.height + margin
     
     //
     moreView.frame.size = CGSize(width: view.frame.width, height: 20.0)
