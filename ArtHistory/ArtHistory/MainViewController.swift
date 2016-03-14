@@ -29,9 +29,17 @@ class MainViewController: UIViewController {
   
   private var selectedGameIndex = 0
   
-  let gameMenu1 = UIButton()
-  let gameMenu2 = UIButton()
-  let gameMenu3 = UIButton()
+  var gameMenuAnimationTimer: NSTimer!
+  
+  private let gameTitleLabel = UILabel()
+  
+  private let gameMenu1 = UIButton()
+  private let gameMenu2 = UIButton()
+  private let gameMenu3 = UIButton()
+  
+  private let gameMenu1Label = UILabel()
+  private let gameMenu2Label = UILabel()
+  private let gameMenu3Label = UILabel()
   
   @IBOutlet weak var topView: UIVisualEffectView!
   @IBOutlet weak var scrollView: UIScrollView!
@@ -51,13 +59,13 @@ class MainViewController: UIViewController {
     scrollView.delegate = self
     
     // game menu
-    gameMenu1.setTitle("Lesson 1", forState: .Normal)
+    gameMenu1.setTitle("1", forState: .Normal)
     gameMenu1.backgroundColor = UIColor.flatMagentaColor()
     
-    gameMenu2.setTitle("Lesson 2", forState: .Normal)
+    gameMenu2.setTitle("2", forState: .Normal)
     gameMenu2.backgroundColor = UIColor.flatWatermelonColor()
     
-    gameMenu3.setTitle("Lesson 3", forState: .Normal)
+    gameMenu3.setTitle("3", forState: .Normal)
     gameMenu3.backgroundColor = UIColor.flatTealColor()
     
     [gameMenu1,gameMenu2,gameMenu3].forEach{
@@ -67,11 +75,23 @@ class MainViewController: UIViewController {
       $0.addTarget(self, action: "goToGame:", forControlEvents: .TouchUpInside)
     }
     
+    gameTitleLabel.text = "Quiz"
+    gameMenu1Label.text = "Egypt Art, Greek Art, Roman Art"
+    gameMenu2Label.text = "Early Christian - Gothic"
+    gameMenu3Label.text = "Renaissance"
+    
     //
     moreView.translatesAutoresizingMaskIntoConstraints = false
     
     //
     [gameMenu1,gameMenu2,gameMenu3].forEach(scrollView.addSubview)
+    [gameMenu1Label, gameMenu2Label, gameMenu3Label].forEach(scrollView.addSubview)
+    scrollView.addSubview(gameTitleLabel)
+  }
+  
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    gameMenuAnimationTimer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: "animateGameMeunButton", userInfo: nil, repeats: true)
   }
   
   override func viewDidLayoutSubviews() {
@@ -114,11 +134,11 @@ class MainViewController: UIViewController {
     springBehaviors.forEach(animator.addBehavior)
     
     // Game menu
-    let centerY = 1.5 * scrollView.frame.height + scrollView.contentInset.top / 2.0 - 20.0 + 25
+    let centerY = 1.5 * scrollView.frame.height + scrollView.contentInset.top / 2.0 - 20.0 + 15
     let margin: CGFloat = 20
     [gameMenu1,gameMenu2,gameMenu3].forEach{
-      $0.frame.size = CGSize(width: 65.0, height: 65.0)
-      $0.titleLabel?.font = $0.titleLabel?.font.fontWithSize(13)
+      $0.frame.size = CGSize(width: 50.0, height: 50.0)
+      $0.titleLabel?.font = $0.titleLabel?.font.fontWithSize(17)
       $0.layer.cornerRadius = $0.frame.width / 2.0
     }
     
@@ -133,6 +153,21 @@ class MainViewController: UIViewController {
     // Game menu 3
     gameMenu3.frame.origin.x = 25
     gameMenu3.frame.origin.y = gameMenu2.frame.origin.y + gameMenu3.frame.height + margin
+    
+    // Game menu label
+    let gameMenuLabelMap = [gameMenu1Label:gameMenu1, gameMenu2Label: gameMenu2, gameMenu3Label: gameMenu3]
+    [gameMenu1Label, gameMenu2Label, gameMenu3Label].forEach{
+      $0.font = $0.font.fontWithSize(13)
+      $0.sizeToFit()
+      $0.center.y = gameMenuLabelMap[$0]!.center.y
+      $0.frame.origin.x = gameMenuLabelMap[$0]!.frame.origin.x + gameMenu1.bounds.width + 15
+    }
+    
+    // Game menu title
+    gameTitleLabel.font = gameTitleLabel.font.fontWithSize(50)
+    gameTitleLabel.sizeToFit()
+    gameTitleLabel.frame.origin.y = gameMenu1.frame.origin.y - 25 - gameTitleLabel.bounds.height
+    gameTitleLabel.frame.origin.x = gameMenu1.frame.origin.x + 5
     
     //
     moreView.frame.size = CGSize(width: view.frame.width, height: 20.0)
@@ -215,6 +250,21 @@ class MainViewController: UIViewController {
     itemCenter = view.convertPoint(button.center, fromView: scrollView)
     transitionBubbleColor = button.backgroundColor
     performSegueWithIdentifier("showGame", sender: self)
+  }
+  
+  func animateGameMeunButton(){
+    
+    var gameMenus = [gameMenu1, gameMenu2, gameMenu3]
+    gameMenus.shuffleInPlace()
+    
+    let gameMenuToAnimate = gameMenus.first!
+    UIView.animateWithDuration(0.8, delay: 0.0, usingSpringWithDamping: 0.35, initialSpringVelocity: 0.2,
+    options: [.Autoreverse,.AllowUserInteraction,.BeginFromCurrentState],
+    animations: {
+      gameMenuToAnimate.transform = CGAffineTransformMakeScale(1.15, 1.15)
+    }, completion: { finish in
+      gameMenuToAnimate.transform = CGAffineTransformIdentity
+    })
   }
   
   //MARK: Unwind Segue
